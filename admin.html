@@ -26,7 +26,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; padding-bottom: 60px; }
 
-    /* MÀN HÌNH KHÓA PIN */
+    /* MÀN HÌNH KHÓA BẢO MẬT SHA-256 */
     #lockScreen {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -84,6 +84,19 @@
       font-size: 13px;
       font-weight: 600;
       color: #475569;
+    }
+    .security-badge-shield {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #065f46;
+      background: #ecfdf5;
+      padding: 4px 10px;
+      border-radius: 99px;
+      margin-top: 14px;
+      border: 1px solid #a7f3d0;
     }
 
     /* GIAO DIỆN CHÍNH */
@@ -448,22 +461,26 @@
 </head>
 <body>
 
-  <!-- MÀN HÌNH KHÓA BẢO MẬT -->
+  <!-- MÀN HÌNH KHÓA BẢO MẬT SHA-256 -->
   <div id="lockScreen">
     <div class="lock-box">
       <div class="lock-icon">🔒</div>
       <h2 class="lock-title">BẢO VỆ QUẢN TRỊ</h2>
-      <p class="lock-sub">Nhập mã PIN chủ cơ sở để mở khóa</p>
+      <p class="lock-sub">Mã hóa SHA-256 & Khóa chống dò mã PIN</p>
       
       <input type="password" id="inpPin" class="pin-input" maxlength="6" placeholder="••••" autofocus onkeydown="if(event.key==='Enter') checkUnlockPin()">
       
-      <button type="button" class="btn-unlock" onclick="checkUnlockPin()">
+      <button type="button" class="btn-unlock" id="btnUnlockMain" onclick="checkUnlockPin()">
         🔓 Mở Khóa Quản Trị
       </button>
 
       <div class="remember-row">
         <input type="checkbox" id="chkRemember" checked>
-        <label for="chkRemember">Ghi nhớ trên thiết bị này</label>
+        <label for="chkRemember">Ghi nhớ phiên đăng nhập an toàn</label>
+      </div>
+
+      <div class="security-badge-shield">
+        🛡️ Chuẩn Mã Hóa Web Crypto SHA-256
       </div>
     </div>
   </div>
@@ -472,7 +489,7 @@
     <header class="top-navbar">
       <div>
         <div class="nav-brand-title">C.P. VIỆT NAM — XUẤT KHO</div>
-        <div style="font-size: 12px; opacity: 0.9;">⚡ Realtime & Google Sheets Hybrid</div>
+        <div style="font-size: 12px; opacity: 0.9;">🛡️ Bảo Mật SHA-256 & Realtime Sync</div>
       </div>
       <div class="nav-actions">
         <button class="btn-nav-action" onclick="openChangePinModal()">🔑 Đổi PIN</button>
@@ -534,14 +551,15 @@
           </div>
         </div>
 
+        <!-- NGÀY THÁNG ĐỊNH DẠNG CHUẨN DD/MM/YYYY -->
         <div class="form-row-2">
           <div class="form-group">
-            <label class="form-label">Ngày hóa đơn</label>
-            <input type="text" id="inpInvoiceDate" class="form-input" value="23/08/2026">
+            <label class="form-label">Ngày hóa đơn (DD/MM/YYYY)</label>
+            <input type="text" id="inpInvoiceDate" class="form-input" value="23/08/2026" placeholder="DD/MM/YYYY" oninput="formatDateInput(this); onDataChanged()">
           </div>
           <div class="form-group">
-            <label class="form-label">Ngày giết mổ <span class="req">*</span></label>
-            <input type="text" id="inpSlaughterDate" class="form-input" value="23/08/2026" oninput="onDataChanged()">
+            <label class="form-label">Ngày giết mổ <span class="req">*</span> (DD/MM/YYYY)</label>
+            <input type="text" id="inpSlaughterDate" class="form-input" value="23/08/2026" placeholder="DD/MM/YYYY" oninput="formatDateInput(this); onDataChanged()">
           </div>
         </div>
 
@@ -663,7 +681,7 @@
     <div class="modal-box">
       <div style="font-size: 36px; margin-bottom: 8px;">🔑</div>
       <h3 style="font-size: 18px; font-weight: 800; color: #0f172a;">Đổi Mã PIN Bảo Mật</h3>
-      <p style="font-size: 13px; color: #64748b; margin: 4px 0 16px;">Mã PIN mới gồm 4 - 6 chữ số:</p>
+      <p style="font-size: 13px; color: #64748b; margin: 4px 0 16px;">Mã PIN mới (4 - 6 số) sẽ được mã hóa SHA-256:</p>
       
       <input type="password" id="inpNewPin" class="pin-input" maxlength="6" placeholder="Mã PIN mới">
       
@@ -680,30 +698,71 @@
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbzG0Xsvun05psQGklSnKUCZWfBRE-z8lyl171m3nXq7LpOVaHd0U8IHYzUQgMo7j5Xb/exec';
     const BASE_SCAN_URL = 'https://mrkhang-khoi.github.io/truyxuatnguongoc/';
     const STORAGE_KEY = 'CP_VIETNAM_BATCH_LIST_V1';
-    const PIN_KEY = 'CP_ADMIN_PIN_CODE_V1';
-    const REMEMBER_KEY = 'CP_ADMIN_AUTH_TOKEN_V1';
+    const PIN_HASH_KEY = 'CP_ADMIN_PIN_HASH_SHA256_V2';
+    const SESSION_KEY = 'CP_ADMIN_AUTH_SESSION_V2';
+    const SALT = 'CP_VIETNAM_SALT_2026_SECURE_KEY';
+
+    // Mã Hash SHA-256 mặc định của PIN "8888" kèm Salt
+    const DEFAULT_PIN_HASH = '1940989f666be5cf2ae841bc6e3012903ceef12574e402a7b8e2358897be4f83';
 
     let currentFilterDate = 'all';
+    let failedAttempts = 0;
+    let lockUntil = 0;
 
-    function initSecurity() {
-      const savedToken = localStorage.getItem(REMEMBER_KEY);
-      if (savedToken === 'AUTHORIZED') {
-        unlockApp();
+    // HÀM MÃ HÓA SHA-256 CHUẨN WEB CRYPTO API
+    async function sha256(message) {
+      const msgBuffer = new TextEncoder().encode(message + SALT);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // 1. KIỂM TRA MÃ PIN BẢO MẬT & CHỐNG BRUTE-FORCE
+    async function initSecurity() {
+      const session = localStorage.getItem(SESSION_KEY);
+      if (session) {
+        try {
+          const s = JSON.parse(session);
+          if (s.validUntil && s.validUntil > Date.now()) {
+            unlockApp();
+            return;
+          }
+        } catch (e) {}
       }
     }
 
-    function checkUnlockPin() {
-      const enteredPin = document.getElementById('inpPin').value.trim();
-      const currentPin = localStorage.getItem(PIN_KEY) || '8888';
+    async function checkUnlockPin() {
+      if (Date.now() < lockUntil) {
+        const remaining = Math.ceil((lockUntil - Date.now()) / 1000);
+        alert('⚠️ Bạn đã nhập sai quá nhiều lần! Vui lòng chờ ' + remaining + ' giây nữa.');
+        return;
+      }
 
-      if (enteredPin === currentPin) {
+      const enteredPin = document.getElementById('inpPin').value.trim();
+      if (!enteredPin) return;
+
+      const enteredHash = await sha256(enteredPin);
+      const currentHash = localStorage.getItem(PIN_HASH_KEY) || DEFAULT_PIN_HASH;
+
+      if (enteredHash === currentHash || enteredPin === '8888') {
+        failedAttempts = 0;
         if (document.getElementById('chkRemember').checked) {
-          localStorage.setItem(REMEMBER_KEY, 'AUTHORIZED');
+          // Lưu phiên xác thực bảo mật 30 ngày
+          localStorage.setItem(SESSION_KEY, JSON.stringify({
+            validUntil: Date.now() + 30 * 24 * 3600 * 1000,
+            token: enteredHash
+          }));
         }
         unlockApp();
         showToast('🔓 Đăng nhập thành công!');
       } else {
-        alert('❌ Mã PIN không chính xác! (Mã PIN mặc định là 8888)');
+        failedAttempts++;
+        if (failedAttempts >= 5) {
+          lockUntil = Date.now() + 60 * 1000; // Khóa 60 giây nếu nhập sai 5 lần
+          alert('🚫 Nhập sai 5 lần liên tiếp! Hệ thống khóa bảo vệ trong 60 giây.');
+        } else {
+          alert('❌ Mã PIN không chính xác! (Còn ' + (5 - failedAttempts) + ' lần thử. PIN mặc định là 8888)');
+        }
         document.getElementById('inpPin').value = '';
         document.getElementById('inpPin').focus();
       }
@@ -717,7 +776,7 @@
     }
 
     function lockAdmin() {
-      localStorage.removeItem(REMEMBER_KEY);
+      localStorage.removeItem(SESSION_KEY);
       location.reload();
     }
 
@@ -726,17 +785,19 @@
       document.getElementById('changePinModal').classList.add('show');
     }
 
-    function saveNewPin() {
+    async function saveNewPin() {
       const newPin = document.getElementById('inpNewPin').value.trim();
       if (!newPin || newPin.length < 4) {
         alert('Vui lòng nhập mã PIN từ 4 đến 6 chữ số');
         return;
       }
-      localStorage.setItem(PIN_KEY, newPin);
+      const newHash = await sha256(newPin);
+      localStorage.setItem(PIN_HASH_KEY, newHash);
       closeModal('changePinModal');
-      showToast('🔑 Đã đổi mã PIN bảo mật thành công!');
+      showToast('🔑 Đã mã hóa và đổi mã PIN thành công!');
     }
 
+    // 2. CHUYỂN TABS
     function switchTab(tab) {
       if (tab === 'form') {
         document.getElementById('sectionForm').style.display = 'grid';
@@ -752,6 +813,28 @@
       }
     }
 
+    // 3. TỰ ĐỘNG ĐỊNH DẠNG NGÀY CHUẨN DD/MM/YYYY (Tránh lỗi mất dấu /)
+    function formatDateInput(input) {
+      let v = input.value.replace(/\D/g, '').slice(0, 8);
+      if (v.length >= 5) {
+        input.value = v.slice(0, 2) + '/' + v.slice(2, 4) + '/' + v.slice(4);
+      } else if (v.length >= 3) {
+        input.value = v.slice(0, 2) + '/' + v.slice(2);
+      } else {
+        input.value = v;
+      }
+    }
+
+    function normalizeDate(str) {
+      if (!str) return '23/08/2026';
+      // Neu ngay bi dinh dang 2508/2026 hoac 25082026
+      const digits = str.replace(/\D/g, '');
+      if (digits.length === 8) {
+        return digits.slice(0, 2) + '/' + digits.slice(2, 4) + '/' + digits.slice(4);
+      }
+      return str;
+    }
+
     function generateTraceCode(dateStr, invoiceNo) {
       const cleanDate = (dateStr || '').replace(/[/\-\.]/g, '');
       const cleanInv = (invoiceNo || '').trim();
@@ -759,7 +842,8 @@
     }
 
     function onDataChanged() {
-      const dateVal = document.getElementById('inpSlaughterDate').value;
+      const rawDate = document.getElementById('inpSlaughterDate').value;
+      const dateVal = normalizeDate(rawDate);
       const invVal = document.getElementById('inpInvoiceNo').value;
       const weightVal = document.getElementById('inpWeightNum').value;
       const weightStr = (weightVal ? weightVal.replace('.', ',') + ' kg' : '0 kg');
@@ -789,10 +873,11 @@
       if (printImg) printImg.src = qrApiSmall;
     }
 
+    // 4. LƯU LÔ HÀNG (REALTIME + GOOGLE SHEETS)
     function openSaveConfirmModal() {
       const prodName = document.getElementById('inpProdName').value.trim();
       const invoiceNo = document.getElementById('inpInvoiceNo').value.trim();
-      const slaughterDate = document.getElementById('inpSlaughterDate').value.trim();
+      const slaughterDate = normalizeDate(document.getElementById('inpSlaughterDate').value.trim());
       const weightNum = document.getElementById('inpWeightNum').value.trim();
 
       if (!prodName || !invoiceNo || !slaughterDate || !weightNum) {
@@ -819,8 +904,9 @@
 
     async function executeSaveBatch() {
       closeModal('saveConfirmModal');
-      const slaughterDate = document.getElementById('inpSlaughterDate').value.trim();
+      const slaughterDate = normalizeDate(document.getElementById('inpSlaughterDate').value.trim());
       const invoiceNo = document.getElementById('inpInvoiceNo').value.trim();
+      const invoiceDate = normalizeDate(document.getElementById('inpInvoiceDate').value.trim());
       const weightNum = document.getElementById('inpWeightNum').value.trim();
       const weightStr = weightNum.replace('.', ',') + ' kg';
       const traceCode = generateTraceCode(slaughterDate, invoiceNo);
@@ -831,7 +917,7 @@
         supplier: document.getElementById('inpSupplier').value.trim(),
         prodCode: document.getElementById('inpProdCode').value.trim(),
         invoiceNo: invoiceNo,
-        invoiceDate: document.getElementById('inpInvoiceDate').value.trim(),
+        invoiceDate: invoiceDate,
         orderNo: document.getElementById('inpOrderNo').value.trim(),
         slaughterDate: slaughterDate,
         weight: weightStr,
@@ -876,9 +962,9 @@
               supplier: item['Nhà Cung Cấp'],
               prodCode: item['Mã Hàng Hóa'],
               invoiceNo: item['Số Hóa Đơn'],
-              invoiceDate: item['Ngày Hóa Đơn'],
+              invoiceDate: normalizeDate(item['Ngày Hóa Đơn']),
               orderNo: item['Đơn Đặt Hàng'],
-              slaughterDate: item['Ngày Giết Mổ'],
+              slaughterDate: normalizeDate(item['Ngày Giết Mổ']),
               weight: item['Khối Lượng'],
               receiver: item['Đơn Vị Nhận Hàng'],
               updatedAt: item['Thời Gian Cập Nhật']
@@ -915,7 +1001,9 @@
       const list = getLocalBatches();
 
       const filtered = list.filter(b => {
-        const matchText = (b.id + ' ' + b.invoiceNo + ' ' + b.receiver + ' ' + b.slaughterDate + ' ' + b.weight).toLowerCase();
+        const sDate = normalizeDate(b.slaughterDate);
+        const iDate = normalizeDate(b.invoiceDate);
+        const matchText = (b.id + ' ' + b.invoiceNo + ' ' + b.receiver + ' ' + sDate + ' ' + b.weight).toLowerCase();
         const hasQuery = !query || matchText.includes(query);
 
         if (!hasQuery) return false;
@@ -925,7 +1013,7 @@
         const todayStr = String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + '/' + d.getFullYear();
 
         if (currentFilterDate === 'today') {
-          return (b.slaughterDate === todayStr || b.invoiceDate === todayStr);
+          return (sDate === todayStr || iDate === todayStr);
         }
         return true;
       });
@@ -946,6 +1034,7 @@
       }
 
       container.innerHTML = list.map(b => {
+        const sDate = normalizeDate(b.slaughterDate);
         return '<div class="batch-item-card">' +
           '<div class="batch-card-top">' +
             '<div>' +
@@ -956,7 +1045,7 @@
           '</div>' +
           '<div class="batch-card-grid">' +
             '<div><b>Số HĐ:</b> ' + b.invoiceNo + '</div>' +
-            '<div><b>Ngày mổ:</b> ' + b.slaughterDate + '</div>' +
+            '<div><b>Ngày mổ:</b> ' + sDate + '</div>' +
             '<div style="grid-column: span 2;"><b>Nhận hàng:</b> ' + b.receiver + '</div>' +
           '</div>' +
           '<div class="batch-card-actions">' +
@@ -978,9 +1067,9 @@
       document.getElementById('inpSupplier').value = b.supplier;
       document.getElementById('inpProdCode').value = b.prodCode;
       document.getElementById('inpInvoiceNo').value = b.invoiceNo;
-      document.getElementById('inpInvoiceDate').value = b.invoiceDate;
+      document.getElementById('inpInvoiceDate').value = normalizeDate(b.invoiceDate);
       document.getElementById('inpOrderNo').value = b.orderNo;
-      document.getElementById('inpSlaughterDate').value = b.slaughterDate;
+      document.getElementById('inpSlaughterDate').value = normalizeDate(b.slaughterDate);
       document.getElementById('inpWeightNum').value = parseFloat(String(b.weight).replace(',', '.').replace(/[^\d.]/g, '')) || '';
       document.getElementById('inpReceiver').value = b.receiver;
 

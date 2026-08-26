@@ -180,7 +180,7 @@
           </svg>
           Dữ liệu đã được niêm phong và xác thực chuỗi cung ứng
         </div>
-        <div class="sync-indicator" id="syncInfoText">⚡ Dữ liệu đám mây thời gian thực</div>
+        <div class="sync-indicator" id="syncInfoText">⚡ Dữ liệu thời gian thực</div>
       </div>
     </div>
 
@@ -193,6 +193,15 @@
   <script>
     const GAS_URL = 'https://script.google.com/macros/s/AKfycbzG0Xsvun05psQGklSnKUCZWfBRE-z8lyl171m3nXq7LpOVaHd0U8IHYzUQgMo7j5Xb/exec';
     const STORAGE_KEY = 'CP_VIETNAM_BATCH_LIST_V1';
+
+    function normalizeDate(str) {
+      if (!str) return '23/08/2026';
+      const digits = String(str).replace(/\D/g, '');
+      if (digits.length === 8) {
+        return digits.slice(0, 2) + '/' + digits.slice(2, 4) + '/' + digits.slice(4);
+      }
+      return str;
+    }
 
     async function loadCustomerView() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -221,7 +230,18 @@
           let b = queryId ? json.data.find(item => (item['Mã Truy Xuất'] === queryId || String(item['Số Hóa Đơn']) === queryId)) : json.data[0];
           if (!b) b = json.data[0];
           if (b) {
-            renderData(b);
+            renderData({
+              prodName: b['Tên Sản Phẩm'],
+              supplier: b['Nhà Cung Cấp'],
+              prodCode: b['Mã Hàng Hóa'],
+              invoiceNo: b['Số Hóa Đơn'],
+              invoiceDate: b['Ngày Hóa Đơn'],
+              orderNo: b['Đơn Đặt Hàng'],
+              slaughterDate: b['Ngày Giết Mổ'],
+              weight: b['Khối Lượng'],
+              receiver: b['Đơn Vị Nhận Hàng'],
+              id: b['Mã Truy Xuất']
+            });
             document.getElementById('syncInfoText').innerText = '⚡ Đã đồng bộ Google Sheets (' + (b['Thời Gian Cập Nhật'] || '') + ')';
             return;
           }
@@ -247,16 +267,16 @@
     }
 
     function renderData(b) {
-      document.getElementById('viewProdName').innerText = b.prodName || b['Tên Sản Phẩm'] || 'Heo mảnh 3 máu';
-      document.getElementById('viewSupplier').innerText = b.supplier || b['Nhà Cung Cấp'] || 'C.P. Việt Nam';
-      document.getElementById('viewProdCode').innerText = b.prodCode || b['Mã Hàng Hóa'] || '22SW2242460001';
-      document.getElementById('viewInvoiceNo').innerText = b.invoiceNo || b['Số Hóa Đơn'] || '17961';
-      document.getElementById('viewInvoiceDate').innerText = b.invoiceDate || b['Ngày Hóa Đơn'] || '23/08/2026';
-      document.getElementById('viewOrderNo').innerText = b.orderNo || b['Đơn Đặt Hàng'] || '505401001063456';
-      document.getElementById('viewSlaughterDate').innerText = b.slaughterDate || b['Ngày Giết Mổ'] || '23/08/2026';
-      document.getElementById('viewWeight').innerText = b.weight || b['Khối Lượng'] || '37,6 kg';
-      document.getElementById('viewReceiver').innerText = b.receiver || b['Đơn Vị Nhận Hàng'] || 'Hộ kinh doanh Phan Văn Tính';
-      document.getElementById('viewTraceCode').innerText = b.id || b['Mã Truy Xuất'] || 'HEO-23082026-17961';
+      document.getElementById('viewProdName').innerText = b.prodName || 'Heo mảnh 3 máu';
+      document.getElementById('viewSupplier').innerText = b.supplier || 'C.P. Việt Nam';
+      document.getElementById('viewProdCode').innerText = b.prodCode || '22SW2242460001';
+      document.getElementById('viewInvoiceNo').innerText = b.invoiceNo || '17961';
+      document.getElementById('viewInvoiceDate').innerText = normalizeDate(b.invoiceDate);
+      document.getElementById('viewOrderNo').innerText = b.orderNo || '505401001063456';
+      document.getElementById('viewSlaughterDate').innerText = normalizeDate(b.slaughterDate);
+      document.getElementById('viewWeight').innerText = b.weight || '37,6 kg';
+      document.getElementById('viewReceiver').innerText = b.receiver || 'Hộ kinh doanh Phan Văn Tính';
+      document.getElementById('viewTraceCode').innerText = b.id || 'HEO-23082026-17961';
     }
 
     window.addEventListener('load', loadCustomerView);
