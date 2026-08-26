@@ -26,7 +26,7 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; padding-bottom: 60px; }
 
-    /* MÀN HÌNH KHÓA BẢO MẬT SHA-256 + CAPTCHA */
+    /* MÀN HÌNH KHÓA BẢO MẬT SHA-256 + CAPTCHA RÕ NÉT */
     #lockScreen {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -35,107 +35,122 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      padding: 16px;
     }
     .lock-box {
       background: white;
       border-radius: 28px;
-      padding: 28px 22px;
-      max-width: 400px;
+      padding: 30px 24px;
+      max-width: 420px;
       width: 100%;
       text-align: center;
       box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
     }
-    .lock-icon { font-size: 44px; margin-bottom: 8px; }
-    .lock-title { font-size: 19px; font-weight: 800; color: #0f172a; }
-    .lock-sub { font-size: 13px; color: #64748b; margin-top: 4px; margin-bottom: 16px; }
+    .lock-icon { font-size: 44px; margin-bottom: 6px; }
+    .lock-title { font-size: 20px; font-weight: 800; color: #0f172a; }
+    .lock-sub { font-size: 13px; color: #64748b; margin-top: 4px; margin-bottom: 18px; }
     
     .lock-field-lbl {
       display: block;
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 800;
-      color: #475569;
+      color: #334155;
       text-align: left;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
       text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
 
     .pin-input {
       width: 100%;
-      padding: 12px;
-      font-size: 20px;
-      letter-spacing: 6px;
+      padding: 13px;
+      font-size: 22px;
+      letter-spacing: 8px;
       text-align: center;
       border: 2px solid #cbd5e1;
       border-radius: 14px;
       font-weight: 800;
       outline: none;
       transition: all 0.2s;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
     .pin-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15); }
 
-    /* KHU VỰC CAPTCHA ĐỒ HỌA */
-    .captcha-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-    .captcha-canvas-wrap {
-      position: relative;
-      background: #f1f5f9;
-      border: 2px solid #cbd5e1;
-      border-radius: 12px;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-    #captchaCanvas { display: block; border-radius: 10px; }
-    .btn-refresh-captcha {
+    /* KHUNG CAPTCHA LỚN & RÕ RÀNG */
+    .captcha-container {
       background: #f8fafc;
-      border: 1.5px solid #cbd5e1;
-      border-radius: 10px;
-      padding: 10px;
-      font-size: 16px;
-      cursor: pointer;
-      color: #334155;
+      border: 2px dashed #94a3b8;
+      border-radius: 16px;
+      padding: 10px 14px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
     }
+    #captchaCanvas {
+      width: 180px;
+      height: 52px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      cursor: pointer;
+      background: white;
+    }
+    .btn-refresh-captcha {
+      background: white;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #047857;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .btn-refresh-captcha:hover { background: #ecfdf5; border-color: var(--primary); }
+
     .captcha-input {
-      flex: 1;
-      padding: 12px;
-      font-size: 18px;
+      width: 100%;
+      padding: 13px;
+      font-size: 19px;
       font-weight: 800;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       text-align: center;
       text-transform: uppercase;
       border: 2px solid #cbd5e1;
-      border-radius: 12px;
+      border-radius: 14px;
       outline: none;
+      transition: all 0.2s;
+      margin-bottom: 16px;
     }
-    .captcha-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15); }
+    .captcha-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15); background: #f0fdf4; }
 
     .btn-unlock {
       width: 100%;
-      padding: 14px;
+      padding: 15px;
       background: linear-gradient(135deg, #059669 0%, #10b981 100%);
       color: white;
       border: none;
       border-radius: 14px;
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 800;
       cursor: pointer;
-      margin-top: 6px;
       box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
+      transition: all 0.2s;
     }
+    .btn-unlock:hover { transform: translateY(-1px); }
+    .btn-unlock:active { transform: scale(0.98); }
+
     .remember-row {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      margin-top: 12px;
+      margin-top: 14px;
       font-size: 13px;
       font-weight: 600;
       color: #475569;
@@ -148,7 +163,7 @@
       font-weight: 700;
       color: #065f46;
       background: #ecfdf5;
-      padding: 4px 10px;
+      padding: 5px 12px;
       border-radius: 99px;
       margin-top: 14px;
       border: 1px solid #a7f3d0;
@@ -516,7 +531,7 @@
 </head>
 <body>
 
-  <!-- MÀN HÌNH KHÓA BẢO MẬT SHA-256 + CAPTCHA -->
+  <!-- MÀN HÌNH KHÓA BẢO MẬT SHA-256 + CAPTCHA RÕ NÉT -->
   <div id="lockScreen">
     <div class="lock-box">
       <div class="lock-icon">🔒</div>
@@ -527,15 +542,16 @@
       <label class="lock-field-lbl">1. MÃ PIN BẢO MẬT</label>
       <input type="password" id="inpPin" class="pin-input" maxlength="6" placeholder="••••" autofocus>
       
-      <!-- Ô NHẬP CAPTCHA ĐỒ HỌA -->
+      <!-- Ô CAPTCHA ĐỒ HỌA LỚN RÕ NÉT -->
       <label class="lock-field-lbl">2. MÃ XÁC THỰC CHỐNG BOT (CAPTCHA)</label>
-      <div class="captcha-row">
-        <div class="captcha-canvas-wrap" onclick="generateVisualCaptcha()" title="Bấm để đổi mã khác">
-          <canvas id="captchaCanvas" width="130" height="46"></canvas>
-        </div>
-        <button type="button" class="btn-refresh-captcha" onclick="generateVisualCaptcha()" title="Đổi mã khác">🔄</button>
-        <input type="text" id="inpCaptcha" class="captcha-input" maxlength="4" placeholder="MÃ" onkeydown="if(event.key==='Enter') checkUnlockPin()">
+      <div class="captcha-container">
+        <canvas id="captchaCanvas" width="220" height="60" onclick="generateVisualCaptcha()" title="Bấm vào ảnh để đổi mã khác"></canvas>
+        <button type="button" class="btn-refresh-captcha" onclick="generateVisualCaptcha()" title="Đổi mã khác">
+          <span>🔄</span> Đổi mã
+        </button>
       </div>
+
+      <input type="text" id="inpCaptcha" class="captcha-input" maxlength="4" placeholder="Nhập 4 ký tự ở trên" onkeydown="if(event.key==='Enter') checkUnlockPin()">
 
       <button type="button" class="btn-unlock" id="btnUnlockMain" onclick="checkUnlockPin()">
         🔓 Mở Khóa Quản Trị
@@ -783,9 +799,10 @@
       return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
     }
 
-    // TẠO MÃ CAPTCHA HÌNH ẢNH ĐỒ HỌA CHỐNG BOT
+    // TẠO MÃ CAPTCHA LỚN RÕ NÉT (220x60, FONT 34PX BOLD)
     function generateVisualCaptcha() {
-      const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+      // Bỏ các ký tự dễ nhầm lẫn như 0, O, 1, I, L
+      const chars = '23456789ABCDEFGHJKMNPQRSTUVWXYZ';
       let code = '';
       for (let i = 0; i < 4; i++) {
         code += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -796,45 +813,42 @@
       if (!canvas) return;
       const ctx = canvas.getContext('2d');
 
-      // 1. Ve nen gradient
+      // 1. Nền sáng rõ
       const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
-      grad.addColorStop(0, '#e2e8f0');
-      grad.addColorStop(1, '#cbd5e1');
+      grad.addColorStop(0, '#f8fafc');
+      grad.addColorStop(1, '#e2e8f0');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      // 2. Ve cac duong gach nhieu chong bot OCR
-      for (let i = 0; i < 5; i++) {
-        ctx.strokeStyle = 'rgba(5, 150, 105, ' + (0.3 + Math.random() * 0.4) + ')';
-        ctx.lineWidth = 1 + Math.random() * 2;
+      // 2. Viền khung
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(1, 1, canvas.width - 2, canvas.height - 2);
+
+      // 3. Đường nhiễu mờ nhẹ
+      for (let i = 0; i < 3; i++) {
+        ctx.strokeStyle = 'rgba(5, 150, 105, ' + (0.2 + Math.random() * 0.2) + ')';
+        ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
         ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
         ctx.stroke();
       }
 
-      // 3. Ve cac cham mau nhieu
-      for (let i = 0; i < 30; i++) {
-        ctx.fillStyle = 'rgba(15, 23, 42, ' + (0.2 + Math.random() * 0.4) + ')';
-        ctx.beginPath();
-        ctx.arc(Math.random() * canvas.width, Math.random() * canvas.height, 1.5, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      // 4. Ve tung chu cai voi goc xoay va mau ngau nhien
+      // 4. Vẽ 4 ký tự siêu to và rõ ràng (Font 34px)
       const colors = ['#047857', '#b91c1c', '#1d4ed8', '#7c2d12', '#4338ca'];
-      ctx.font = 'bold 24px sans-serif';
+      ctx.font = 'bold 34px "Plus Jakarta Sans", sans-serif';
       ctx.textBaseline = 'middle';
 
       for (let i = 0; i < 4; i++) {
         const char = code[i];
         ctx.save();
-        const x = 20 + i * 26;
-        const y = canvas.height / 2;
+        const x = 32 + i * 48;
+        const y = canvas.height / 2 + 1;
         ctx.translate(x, y);
-        ctx.rotate((Math.random() - 0.5) * 0.4);
-        ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
-        ctx.fillText(char, -10, 0);
+        ctx.rotate((Math.random() - 0.5) * 0.25);
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.fillText(char, -14, 0);
         ctx.restore();
       }
     }
@@ -871,7 +885,7 @@
 
       // Kiem tra Captcha
       if (enteredCaptcha !== currentCaptchaText) {
-        alert('❌ Mã xác thực CAPTCHA không chính xác! Đã tạo mã mới.');
+        alert('❌ Mã xác thực CAPTCHA không chính xác! Đã đổi mã mới.');
         generateVisualCaptcha();
         document.getElementById('inpCaptcha').value = '';
         document.getElementById('inpCaptcha').focus();
