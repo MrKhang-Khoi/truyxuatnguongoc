@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mã QR Trang Web Học Tiếng Xơ Đăng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+  <style>
+    :root {
+      --primary: #1e40af;
+      --accent: #b91c1c;
+      --text: #0f172a;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    body {
+      background: linear-gradient(135deg, #eff6ff 0%, #f8fafc 50%, #fef2f2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 16px;
+    }
+    .card {
+      background: white;
+      border-radius: 24px;
+      padding: 32px 24px;
+      max-width: 460px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 35px -10px rgba(30, 64, 175, 0.12), 0 10px 15px -5px rgba(0,0,0,0.04);
+      border: 1px solid #e2e8f0;
+    }
+    .badge {
+      display: inline-block;
+      background: #dbeafe;
+      color: #1e40af;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 99px;
+      margin-bottom: 12px;
+    }
+    h1 { font-size: 22px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+    .url-link {
+      color: #2563eb;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      word-break: break-all;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .qr-holder {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: #f8fafc;
+      border: 2px dashed #cbd5e1;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+    .theme-select {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .theme-btn {
+      padding: 8px 4px;
+      border-radius: 10px;
+      border: 2px solid #e2e8f0;
+      background: white;
+      cursor: pointer;
+      font-size: 11px;
+      font-weight: 700;
+      color: #64748b;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .theme-btn.active { border-color: #1e40af; background: #eff6ff; color: #1e40af; }
+    .dot { width: 20px; height: 20px; border-radius: 50%; }
+    .btn-download {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+    }
+    .btn-download:hover { transform: translateY(-1px); }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="badge">🌐 Cổng Học Trực Tuyến</div>
+    <h1>MÃ QR TRUY CẬP WEBSITE</h1>
+    <a href="https://hoctiengxodang.online/" target="_blank" class="url-link">https://hoctiengxodang.online/</a>
+
+    <div class="qr-holder">
+      <div id="qr-box"></div>
+    </div>
+
+    <div class="theme-select">
+      <button class="theme-btn active" onclick="setTheme('navy')">
+        <div class="dot" style="background: #1e40af;"></div>
+        Navy
+      </button>
+      <button class="theme-btn" onclick="setTheme('red')">
+        <div class="dot" style="background: #b91c1c;"></div>
+        Đỏ Đậm
+      </button>
+      <button class="theme-btn" onclick="setTheme('emerald')">
+        <div class="dot" style="background: #059669;"></div>
+        Emerald
+      </button>
+      <button class="theme-btn" onclick="setTheme('gold')">
+        <div class="dot" style="background: #d97706;"></div>
+        Gold
+      </button>
+    </div>
+
+    <button class="btn-download" onclick="downloadQR()">⬇️ Tải Ảnh Mã QR HD (1200px)</button>
+  </div>
+
+  <script>
+    const TARGET_URL = "https://hoctiengxodang.online/";
+    const themes = {
+      navy: { c1: '#1e40af', c2: '#172554', corner: '#1e3a8a' },
+      red: { c1: '#b91c1c', c2: '#7f1d1d', corner: '#991b1b' },
+      emerald: { c1: '#059669', c2: '#064e3b', corner: '#047857' },
+      gold: { c1: '#d97706', c2: '#78350f', corner: '#b45309' }
+    };
+
+    let curTheme = 'navy';
+    let qrObj;
+
+    function renderQR() {
+      const t = themes[curTheme];
+      qrObj = new QRCodeStyling({
+        width: 250,
+        height: 250,
+        type: "canvas",
+        data: TARGET_URL,
+        dotsOptions: {
+          color: t.c1,
+          gradient: {
+            type: "linear",
+            rotation: 45,
+            colorStops: [{ offset: 0, color: t.c1 }, { offset: 1, color: t.c2 }]
+          },
+          type: "dots"
+        },
+        cornersSquareOptions: { color: t.corner, type: "extra-rounded" },
+        cornersDotOptions: { color: t.c1, type: "dot" },
+        qrOptions: { errorCorrectionLevel: "H" }
+      });
+      document.getElementById('qr-box').innerHTML = '';
+      qrObj.append(document.getElementById('qr-box'));
+    }
+
+    function setTheme(key) {
+      curTheme = key;
+      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      renderQR();
+    }
+
+    function downloadQR() {
+      qrObj.download({ name: `Ma_QR_HocTiengXoDang_${curTheme}`, extension: "png" });
+    }
+
+    window.addEventListener('load', renderQR);
+  </script>
+</body>
+</html>
