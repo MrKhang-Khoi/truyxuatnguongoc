@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -344,60 +344,49 @@
           }
         }
       } catch (err) {
-        console.warn('GG Sheets fetch:', err);
+        console.warn('GG Sheets fetch error:', err);
       }
-      // 1. Kiểm tra tham số id trên URL: ?id=HEO-20260823-17961
-      const urlParams = new URLSearchParams(window.location.search);
-      const queryId = urlParams.get('id') || urlParams.get('hd');
 
-      let currentBatch = null;
-
-      // 2. Lấy dữ liệu từ bộ nhớ
+      // 2. Fallback LocalStorage nếu offline
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         try {
           const list = JSON.parse(saved);
           if (Array.isArray(list) && list.length > 0) {
-            if (queryId) {
-              currentBatch = list.find(b => b.id === queryId || b.invoiceNo === queryId);
-            }
-            if (!currentBatch) {
-              // Lấy lô hàng mới nhất (dòng đầu tiên)
-              currentBatch = list[0];
-            }
+            let b = queryId ? list.find(item => item.id === queryId || item.invoiceNo === queryId) : list[0];
+            if (!b) b = list[0];
+            renderData(b);
+            return;
           }
-        } catch (e) {
-          console.error(e);
-        }
+        } catch (e) {}
       }
 
-      // 3. Nếu chưa có dữ liệu tùy chỉnh, dùng dữ liệu gốc từ chứng chỉ C.P.
-      if (!currentBatch) {
-        currentBatch = {
-          id: 'HEO-20260823-17961',
-          prodName: 'Heo mảnh 3 máu',
-          supplier: 'Công ty Cổ phần Chăn nuôi C.P. Việt Nam – Chi nhánh Vũng Tàu',
-          prodCode: '22SW2242460001',
-          invoiceNo: '17961',
-          invoiceDate: '23/08/2026',
-          orderNo: '505401001063456',
-          slaughterDate: '23/08/2026',
-          weight: '37,6 kg',
-          receiver: 'Hộ kinh doanh Phan Văn Tính'
-        };
-      }
+      // 3. Fallback mặc định
+      renderData({
+        id: 'HEO-23082026-17961',
+        prodName: 'Heo mảnh 3 máu',
+        supplier: 'Công ty Cổ phần Chăn nuôi C.P. Việt Nam – Chi nhánh Vũng Tàu',
+        prodCode: '22SW2242460001',
+        invoiceNo: '17961',
+        invoiceDate: '23/08/2026',
+        orderNo: '505401001063456',
+        slaughterDate: '23/08/2026',
+        weight: '37,6 kg',
+        receiver: 'Hộ kinh doanh Phan Văn Tính'
+      });
+    }
 
-      // 4. Đổ dữ liệu ra màn hình
-      document.getElementById('viewProdName').innerText = currentBatch.prodName || 'Heo mảnh 3 máu';
-      document.getElementById('viewSupplier').innerText = currentBatch.supplier || 'C.P. Việt Nam';
-      document.getElementById('viewProdCode').innerText = currentBatch.prodCode || '22SW2242460001';
-      document.getElementById('viewInvoiceNo').innerText = currentBatch.invoiceNo || '17961';
-      document.getElementById('viewInvoiceDate').innerText = currentBatch.invoiceDate || '23/08/2026';
-      document.getElementById('viewOrderNo').innerText = currentBatch.orderNo || '505401001063456';
-      document.getElementById('viewSlaughterDate').innerText = currentBatch.slaughterDate || '23/08/2026';
-      document.getElementById('viewWeight').innerText = currentBatch.weight || '37,6 kg';
-      document.getElementById('viewReceiver').innerText = currentBatch.receiver || 'Hộ kinh doanh Phan Văn Tính';
-      document.getElementById('viewTraceCode').innerText = currentBatch.id || 'HEO-20260823-17961';
+    function renderData(b) {
+      document.getElementById('viewProdName').innerText = b.prodName || b['Tên Sản Phẩm'] || 'Heo mảnh 3 máu';
+      document.getElementById('viewSupplier').innerText = b.supplier || b['Nhà Cung Cấp'] || 'C.P. Việt Nam';
+      document.getElementById('viewProdCode').innerText = b.prodCode || b['Mã Hàng Hóa'] || '22SW2242460001';
+      document.getElementById('viewInvoiceNo').innerText = b.invoiceNo || b['Số Hóa Đơn'] || '17961';
+      document.getElementById('viewInvoiceDate').innerText = b.invoiceDate || b['Ngày Hóa Đơn'] || '23/08/2026';
+      document.getElementById('viewOrderNo').innerText = b.orderNo || b['Đơn Đặt Hàng'] || '505401001063456';
+      document.getElementById('viewSlaughterDate').innerText = b.slaughterDate || b['Ngày Giết Mổ'] || '23/08/2026';
+      document.getElementById('viewWeight').innerText = b.weight || b['Khối Lượng'] || '37,6 kg';
+      document.getElementById('viewReceiver').innerText = b.receiver || b['Đơn Vị Nhận Hàng'] || 'Hộ kinh doanh Phan Văn Tính';
+      document.getElementById('viewTraceCode').innerText = b.id || b['Mã Truy Xuất'] || 'HEO-23082026-17961';
     }
 
     window.addEventListener('load', loadCustomerView);

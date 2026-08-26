@@ -489,7 +489,7 @@
       </div>
 
       <div class="qr-preview-box">
-        <div id="qrHolder"></div>
+        <img id="bigQrImg" src="" style="width: 200px; height: 200px; margin: 0 auto; display: block; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.06);" alt="Mã QR">
         <div style="font-size: 12px; font-weight: 700; color: #059669; margin-top: 10px;">
           🔗 Quét bằng Camera / Zalo mở Web
         </div>
@@ -516,7 +516,7 @@
             <div style="margin-top: 4px; font-size: 10px; color: #047857; font-family: monospace; font-weight: 700;" id="lblPrintTrace">HEO-20260823-17961</div>
           </div>
           <div style="text-align: center;">
-            <canvas id="qrPrintCanvas"></canvas>
+            <img id="qrPrintImg" src="" style="width: 105px; height: 105px; border-radius: 6px; border: 1px solid #cbd5e1;" alt="Mã QR In">
             <div style="font-size: 9px; font-weight: 700; color: #059669; margin-top: 2px;">Quét Zalo / Camera</div>
           </div>
         </div>
@@ -583,22 +583,14 @@
 
     function renderQRCodes(traceCode) {
       const scanUrl = BASE_SCAN_URL + '?id=' + encodeURIComponent(traceCode);
+      const encoded = encodeURIComponent(scanUrl);
+      const qrApiBig = 'https://api.qrserver.com/v1/create-qr-code/?size=400x400&color=047857&bgcolor=ffffff&margin=10&data=' + encoded;
+      const qrApiSmall = 'https://api.qrserver.com/v1/create-qr-code/?size=250x250&color=047857&bgcolor=ffffff&margin=5&data=' + encoded;
 
-      QRCode.toCanvas(document.getElementById('qrPrintCanvas'), scanUrl, {
-        width: 120,
-        margin: 2,
-        color: { dark: '#047857', light: '#ffffff' },
-        errorCorrectionLevel: 'M'
-      });
-
-      const holder = document.getElementById('qrHolder');
-      holder.innerHTML = '<canvas id="bigQrCanvas"></canvas>';
-      QRCode.toCanvas(document.getElementById('bigQrCanvas'), scanUrl, {
-        width: 200,
-        margin: 2,
-        color: { dark: '#047857', light: '#ffffff' },
-        errorCorrectionLevel: 'M'
-      });
+      const bigImg = document.getElementById('bigQrImg');
+      if (bigImg) bigImg.src = qrApiBig;
+      const printImg = document.getElementById('qrPrintImg');
+      if (printImg) printImg.src = qrApiSmall;
     }
 
     function openSaveConfirmModal() {
