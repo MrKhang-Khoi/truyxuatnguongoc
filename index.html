@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Truy Xuất Nguồn Gốc Thực Phẩm - C.P. Việt Nam</title>
   <meta name="description" content="Trang xác thực nguồn gốc thịt heo chính hãng C.P. Việt Nam">
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -18,14 +20,7 @@
       --border: #e2e8f0;
       --shadow-lg: 0 20px 35px -10px rgba(5, 150, 105, 0.18), 0 10px 15px -5px rgba(0, 0, 0, 0.04);
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    }
-
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
     body {
       background: linear-gradient(180deg, #ecfdf5 0%, #f8fafc 40%, #f1f5f9 100%);
       color: var(--text-main);
@@ -35,13 +30,7 @@
       flex-direction: column;
       align-items: center;
     }
-
-    .container {
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
+    .container { width: 100%; max-width: 480px; margin: 0 auto; }
     .trace-card {
       background: white;
       border-radius: 28px;
@@ -50,7 +39,6 @@
       overflow: hidden;
       margin-top: 8px;
     }
-
     .trace-header {
       background: linear-gradient(135deg, #047857 0%, #10b981 100%);
       color: white;
@@ -58,18 +46,14 @@
       text-align: center;
       position: relative;
     }
-
     .trace-header::after {
       content: "";
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
+      bottom: 0; left: 0; right: 0;
       height: 16px;
       background: white;
       border-radius: 16px 16px 0 0;
     }
-
     .badge-verified {
       display: inline-flex;
       align-items: center;
@@ -85,78 +69,17 @@
       margin-bottom: 10px;
       border: 1px solid rgba(255, 255, 255, 0.35);
     }
-
-    .main-title {
-      font-size: 19px;
-      font-weight: 800;
-      letter-spacing: 0.5px;
-      line-height: 1.3;
-    }
-
-    .product-title {
-      font-size: 26px;
-      font-weight: 800;
-      color: #fef08a;
-      margin-top: 4px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .trace-body {
-      padding: 12px 18px 26px;
-    }
-
-    .info-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .info-item {
-      display: flex;
-      align-items: flex-start;
-      padding: 12px 14px;
-      background: #f8fafc;
-      border-radius: 14px;
-      border: 1px solid #f1f5f9;
-    }
-
-    .info-icon {
-      font-size: 22px;
-      margin-right: 12px;
-      line-height: 1.2;
-      flex-shrink: 0;
-    }
-
-    .info-content {
-      flex: 1;
-    }
-
-    .info-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-
-    .info-value {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-top: 2px;
-      line-height: 1.4;
-      word-break: break-word;
-    }
-
-    .supplier-highlight {
-      color: #047857;
-    }
-
-    .weight-highlight {
-      color: #dc2626;
-      font-size: 18px;
-    }
-
+    .main-title { font-size: 19px; font-weight: 800; letter-spacing: 0.5px; line-height: 1.3; }
+    .product-title { font-size: 26px; font-weight: 800; color: #fef08a; margin-top: 4px; text-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .trace-body { padding: 12px 18px 26px; }
+    .info-list { display: flex; flex-direction: column; gap: 10px; }
+    .info-item { display: flex; align-items: flex-start; padding: 12px 14px; background: #f8fafc; border-radius: 14px; border: 1px solid #f1f5f9; }
+    .info-icon { font-size: 22px; margin-right: 12px; line-height: 1.2; flex-shrink: 0; }
+    .info-content { flex: 1; }
+    .info-label { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.4px; }
+    .info-value { font-size: 15px; font-weight: 700; color: var(--text-main); margin-top: 2px; line-height: 1.4; word-break: break-word; }
+    .supplier-highlight { color: #047857; }
+    .weight-highlight { color: #dc2626; font-size: 18px; }
     .trace-code-box {
       margin-top: 18px;
       padding: 14px;
@@ -165,46 +88,14 @@
       border-radius: 16px;
       text-align: center;
     }
-
-    .trace-code-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: #065f46;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .trace-code-val {
-      font-size: 19px;
-      font-weight: 800;
-      color: #064e3b;
-      font-family: monospace;
-      letter-spacing: 1.5px;
-      margin-top: 2px;
-    }
-
-    .security-badge {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin-top: 20px;
-      font-size: 12px;
-      font-weight: 600;
-      color: #059669;
-    }
-
-    .footer-note {
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 20px;
-      line-height: 1.5;
-    }
+    .trace-code-label { font-size: 11px; font-weight: 700; color: #065f46; text-transform: uppercase; letter-spacing: 0.5px; }
+    .trace-code-val { font-size: 19px; font-weight: 800; color: #064e3b; font-family: monospace; letter-spacing: 1.5px; margin-top: 2px; }
+    .security-badge { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 20px; font-size: 12px; font-weight: 600; color: #059669; }
+    .footer-note { text-align: center; font-size: 12px; color: var(--text-muted); margin-top: 20px; line-height: 1.5; }
+    .sync-indicator { font-size: 11px; color: #059669; text-align: center; margin-top: 8px; font-weight: 700; }
   </style>
 </head>
 <body>
-
   <div class="container">
     <div class="trace-card">
       <div class="trace-header">
@@ -220,7 +111,6 @@
 
       <div class="trace-body">
         <div class="info-list">
-          <!-- Nhà cung cấp -->
           <div class="info-item">
             <div class="info-icon">✅</div>
             <div class="info-content">
@@ -228,8 +118,6 @@
               <div class="info-value supplier-highlight" id="viewSupplier">Công ty Cổ phần Chăn nuôi C.P. Việt Nam – Chi nhánh Vũng Tàu</div>
             </div>
           </div>
-
-          <!-- Mã hàng hóa -->
           <div class="info-item">
             <div class="info-icon">🔖</div>
             <div class="info-content">
@@ -237,8 +125,6 @@
               <div class="info-value" id="viewProdCode">22SW2242460001</div>
             </div>
           </div>
-
-          <!-- Số hóa đơn -->
           <div class="info-item">
             <div class="info-icon">📄</div>
             <div class="info-content">
@@ -246,8 +132,6 @@
               <div class="info-value" id="viewInvoiceNo">17961</div>
             </div>
           </div>
-
-          <!-- Ngày hóa đơn -->
           <div class="info-item">
             <div class="info-icon">📅</div>
             <div class="info-content">
@@ -255,8 +139,6 @@
               <div class="info-value" id="viewInvoiceDate">23/08/2026</div>
             </div>
           </div>
-
-          <!-- Đơn đặt hàng -->
           <div class="info-item">
             <div class="info-icon">📋</div>
             <div class="info-content">
@@ -264,8 +146,6 @@
               <div class="info-value" id="viewOrderNo">505401001063456</div>
             </div>
           </div>
-
-          <!-- Ngày giết mổ -->
           <div class="info-item">
             <div class="info-icon">🐖</div>
             <div class="info-content">
@@ -273,8 +153,6 @@
               <div class="info-value" id="viewSlaughterDate">23/08/2026</div>
             </div>
           </div>
-
-          <!-- Khối lượng -->
           <div class="info-item">
             <div class="info-icon">⚖️</div>
             <div class="info-content">
@@ -282,8 +160,6 @@
               <div class="info-value weight-highlight" id="viewWeight">37,6 kg</div>
             </div>
           </div>
-
-          <!-- Đơn vị nhận hàng -->
           <div class="info-item">
             <div class="info-icon">🏪</div>
             <div class="info-content">
@@ -293,10 +169,9 @@
           </div>
         </div>
 
-        <!-- Mã truy xuất -->
         <div class="trace-code-box">
           <div class="trace-code-label">Mã truy xuất điện tử</div>
-          <div class="trace-code-val" id="viewTraceCode">HEO-20260823-17961</div>
+          <div class="trace-code-val" id="viewTraceCode">HEO-23082026-17961</div>
         </div>
 
         <div class="security-badge">
@@ -305,6 +180,7 @@
           </svg>
           Dữ liệu đã được niêm phong và xác thực chuỗi cung ứng
         </div>
+        <div class="sync-indicator" id="syncInfoText">⚡ Dữ liệu đám mây thời gian thực</div>
       </div>
     </div>
 
@@ -322,7 +198,22 @@
       const urlParams = new URLSearchParams(window.location.search);
       const queryId = urlParams.get('id') || urlParams.get('hd');
 
-      // 1. Thử lấy từ Google Sheets
+      let currentBatch = null;
+
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const list = JSON.parse(saved);
+          if (Array.isArray(list) && list.length > 0) {
+            currentBatch = queryId ? list.find(item => item.id === queryId || item.invoiceNo === queryId) : list[0];
+            if (currentBatch) {
+              renderData(currentBatch);
+              document.getElementById('syncInfoText').innerText = '⚡ Tải tức thì từ hệ thống';
+            }
+          }
+        } catch (e) {}
+      }
+
       try {
         const res = await fetch(GAS_URL);
         const json = await res.json();
@@ -330,50 +221,29 @@
           let b = queryId ? json.data.find(item => (item['Mã Truy Xuất'] === queryId || String(item['Số Hóa Đơn']) === queryId)) : json.data[0];
           if (!b) b = json.data[0];
           if (b) {
-            document.getElementById('viewProdName').innerText = b['Tên Sản Phẩm'] || 'Heo mảnh 3 máu';
-            document.getElementById('viewSupplier').innerText = b['Nhà Cung Cấp'] || 'C.P. Việt Nam';
-            document.getElementById('viewProdCode').innerText = b['Mã Hàng Hóa'] || '22SW2242460001';
-            document.getElementById('viewInvoiceNo').innerText = b['Số Hóa Đơn'] || '17961';
-            document.getElementById('viewInvoiceDate').innerText = b['Ngày Hóa Đơn'] || '23/08/2026';
-            document.getElementById('viewOrderNo').innerText = b['Đơn Đặt Hàng'] || '505401001063456';
-            document.getElementById('viewSlaughterDate').innerText = b['Ngày Giết Mổ'] || '23/08/2026';
-            document.getElementById('viewWeight').innerText = b['Khối Lượng'] || '37,6 kg';
-            document.getElementById('viewReceiver').innerText = b['Đơn Vị Nhận Hàng'] || 'Hộ kinh doanh Phan Văn Tính';
-            document.getElementById('viewTraceCode').innerText = b['Mã Truy Xuất'] || 'HEO-20260823-17961';
+            renderData(b);
+            document.getElementById('syncInfoText').innerText = '⚡ Đã đồng bộ Google Sheets (' + (b['Thời Gian Cập Nhật'] || '') + ')';
             return;
           }
         }
       } catch (err) {
-        console.warn('GG Sheets fetch error:', err);
+        console.warn('Google Sheets fetch:', err);
       }
 
-      // 2. Fallback LocalStorage nếu offline
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        try {
-          const list = JSON.parse(saved);
-          if (Array.isArray(list) && list.length > 0) {
-            let b = queryId ? list.find(item => item.id === queryId || item.invoiceNo === queryId) : list[0];
-            if (!b) b = list[0];
-            renderData(b);
-            return;
-          }
-        } catch (e) {}
+      if (!currentBatch) {
+        renderData({
+          id: 'HEO-23082026-17961',
+          prodName: 'Heo mảnh 3 máu',
+          supplier: 'Công ty Cổ phần Chăn nuôi C.P. Việt Nam – Chi nhánh Vũng Tàu',
+          prodCode: '22SW2242460001',
+          invoiceNo: '17961',
+          invoiceDate: '23/08/2026',
+          orderNo: '505401001063456',
+          slaughterDate: '23/08/2026',
+          weight: '37,6 kg',
+          receiver: 'Hộ kinh doanh Phan Văn Tính'
+        });
       }
-
-      // 3. Fallback mặc định
-      renderData({
-        id: 'HEO-23082026-17961',
-        prodName: 'Heo mảnh 3 máu',
-        supplier: 'Công ty Cổ phần Chăn nuôi C.P. Việt Nam – Chi nhánh Vũng Tàu',
-        prodCode: '22SW2242460001',
-        invoiceNo: '17961',
-        invoiceDate: '23/08/2026',
-        orderNo: '505401001063456',
-        slaughterDate: '23/08/2026',
-        weight: '37,6 kg',
-        receiver: 'Hộ kinh doanh Phan Văn Tính'
-      });
     }
 
     function renderData(b) {
