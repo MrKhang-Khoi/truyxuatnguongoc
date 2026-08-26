@@ -1,0 +1,210 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Tem Nhãn Dán Bao Bì - C.P. Việt Nam</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      background: #f1f5f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .label-card {
+      width: 440px;
+      background: white;
+      border: 3px solid #059669;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .label-header {
+      background: linear-gradient(135deg, #047857 0%, #10b981 100%);
+      color: white;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand-title {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .stamp-badge {
+      background: #fef08a;
+      color: #713f12;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 99px;
+      text-transform: uppercase;
+    }
+
+    .product-headline {
+      padding: 10px 16px 6px;
+      border-bottom: 2px dashed #e2e8f0;
+      background: #f8fafc;
+    }
+
+    .product-headline h1 {
+      font-size: 19px;
+      font-weight: 800;
+      color: #065f46;
+    }
+
+    .product-headline p {
+      font-size: 11px;
+      color: #64748b;
+      margin-top: 2px;
+    }
+
+    .label-body {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      padding: 14px 16px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .info-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 12px;
+    }
+
+    .info-row {
+      line-height: 1.3;
+    }
+
+    .info-row b {
+      color: #334155;
+    }
+
+    .info-row span {
+      color: #0f172a;
+      font-weight: 600;
+    }
+
+    .highlight-red {
+      color: #dc2626 !important;
+      font-weight: 800 !important;
+    }
+
+    .qr-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .qr-column img {
+      width: 135px;
+      height: 135px;
+      border: 1px solid #cbd5e1;
+      border-radius: 10px;
+      padding: 4px;
+      background: white;
+    }
+
+    .qr-scan-text {
+      font-size: 10px;
+      font-weight: 700;
+      color: #059669;
+      margin-top: 4px;
+    }
+
+    .label-footer {
+      background: #f0fdf4;
+      padding: 8px 16px;
+      border-top: 1px solid #bbf7d0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: #166534;
+    }
+
+    .print-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      background: #059669;
+      color: white;
+      font-weight: 700;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(5,150,105,0.3);
+    }
+
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      .print-btn {
+        display: none;
+      }
+      .label-card {
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="print-btn" onclick="window.print()">🖨️ In Tem Này</button>
+
+  <div class="label-card">
+    <div class="label-header">
+      <div class="brand-title">C.P. VIỆT NAM — CHI NHÁNH VŨNG TÀU</div>
+      <div class="stamp-badge">ĐÃ KIỂM DỊCH</div>
+    </div>
+
+    <div class="product-headline">
+      <h1>Heo mảnh 3 máu</h1>
+      <p>Mã hàng: 22SW2242460001 | HĐ: 17961</p>
+    </div>
+
+    <div class="label-body">
+      <div class="info-fields">
+        <div class="info-row"><b>Ngày HĐ:</b> <span>23/08/2026</span></div>
+        <div class="info-row"><b>Đơn hàng:</b> <span>505401001063456</span></div>
+        <div class="info-row"><b>Ngày mổ:</b> <span>23/08/2026</span></div>
+        <div class="info-row"><b>Khối lượng:</b> <span class="highlight-red">37,6 kg</span></div>
+        <div class="info-row"><b>Nhận hàng:</b> <span>HKD Phan Văn Tính</span></div>
+      </div>
+
+      <div class="qr-column">
+        <img src="ma_qr_online_emerald.png" alt="Mã QR Truy Xuất">
+        <div class="qr-scan-text">Quét Zalo / Camera Mở Web</div>
+      </div>
+    </div>
+
+    <div class="label-footer">
+      <span>Mã truy xuất:</span>
+      <span style="font-family: monospace; font-size: 13px;">HEO-20260823-17961</span>
+    </div>
+  </div>
+</body>
+</html>
