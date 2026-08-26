@@ -2,410 +2,468 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Cổng Quản Lý Xuất Hàng & Tạo Mã QR - Chủ Cơ Sở</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cổng Quản Lý & Xuất Tem QR - C.P. Việt Nam</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <style>
     :root {
       --primary: #059669;
-      --primary-dark: #065f46;
+      --primary-dark: #047857;
+      --primary-light: #ecfdf5;
+      --danger: #ef4444;
       --text-main: #0f172a;
       --text-muted: #64748b;
-      --border: #cbd5e1;
-      --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+      --border: #e2e8f0;
+      --bg: #f8fafc;
+      --radius: 18px;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-    }
-
-    body {
-      background: #f8fafc;
-      color: var(--text-main);
-      padding: 24px 16px 60px;
-    }
-
-    .header-bar {
-      max-width: 1000px;
-      margin: 0 auto 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: white;
-      padding: 16px 24px;
-      border-radius: 16px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
-      border: 1px solid #e2e8f0;
-    }
-
-    .brand h1 {
-      font-size: 18px;
-      font-weight: 800;
-      color: #047857;
-    }
-
-    .brand p {
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    .link-live-btn {
-      padding: 8px 16px;
-      background: #ecfdf5;
-      color: #047857;
-      font-weight: 700;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 13px;
-      border: 1px solid #a7f3d0;
-      transition: all 0.2s;
-    }
-
-    .link-live-btn:hover {
-      background: #d1fae5;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-
-    @media (min-width: 860px) {
-      .container {
-        grid-template-columns: 1.1fr 0.9fr;
-        align-items: start;
-      }
-    }
-
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: var(--shadow);
-      border: 1px solid #e2e8f0;
-    }
-
-    .card-title {
-      font-size: 17px;
-      font-weight: 800;
-      color: #0f172a;
-      margin-bottom: 6px;
-    }
-
-    .card-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 20px;
-    }
-
-    .form-group {
-      margin-bottom: 14px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 12px;
-      font-weight: 700;
-      color: #334155;
-      margin-bottom: 4px;
-      text-transform: uppercase;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 10px 14px;
-      border: 1.5px solid #e2e8f0;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #0f172a;
-      outline: none;
-      transition: all 0.2s;
-    }
-
-    .form-control:focus {
-      border-color: #059669;
-      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
-    }
-
-    .row-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    /* Right Column QR Studio */
-    .qr-preview-box {
-      background: #f8fafc;
-      border: 2px dashed #cbd5e1;
-      border-radius: 16px;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-    }
-
-    #qr-holder {
-      min-height: 240px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .theme-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 16px;
-    }
-
-    .theme-btn {
-      padding: 8px 4px;
-      border-radius: 10px;
-      border: 2px solid #e2e8f0;
-      background: white;
-      cursor: pointer;
-      font-size: 11px;
-      font-weight: 700;
-      color: #64748b;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .theme-btn.active {
-      border-color: #059669;
-      background: #ecfdf5;
-      color: #047857;
-    }
-
-    .swatch {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-    }
-
-    .btn-main {
-      width: 100%;
-      padding: 13px 18px;
-      border-radius: 12px;
-      font-size: 15px;
-      font-weight: 700;
-      color: white;
-      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-      border: none;
-      cursor: pointer;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-    }
-
-    .btn-sub {
-      width: 100%;
-      padding: 11px 18px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #334155;
-      background: #f1f5f9;
-      border: 1px solid #cbd5e1;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      text-decoration: none;
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; -webkit-tap-highlight-color: transparent; }
+    body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; padding-bottom: 80px; }
+    .app-header { background: linear-gradient(135deg, #047857 0%, #10b981 100%); color: white; padding: 16px 20px 18px; position: sticky; top: 0; z-index: 50; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.2); }
+    .header-top { display: flex; justify-content: space-between; align-items: center; }
+    .brand-title { font-size: 17px; font-weight: 800; }
+    .brand-sub { font-size: 12px; opacity: 0.9; margin-top: 2px; }
+    .btn-view-scan { background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.4); color: white; padding: 6px 14px; border-radius: 99px; font-size: 12px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 4px; }
+    .nav-tabs { display: flex; background: #f1f5f9; margin: 16px; padding: 4px; border-radius: 14px; gap: 4px; }
+    .tab-btn { flex: 1; padding: 10px; border: none; background: transparent; border-radius: 10px; font-size: 13px; font-weight: 700; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+    .tab-btn.active { background: white; color: var(--primary-dark); box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+    .main-container { max-width: 600px; margin: 0 auto; padding: 0 16px; }
+    .card { background: white; border-radius: var(--radius); padding: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); border: 1px solid var(--border); margin-bottom: 20px; }
+    .section-title { font-size: 16px; font-weight: 800; color: #0f172a; display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+    .form-group { margin-bottom: 14px; }
+    .form-label { display: block; font-size: 12px; font-weight: 700; color: #475569; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.4px; }
+    .form-label .req { color: var(--danger); margin-left: 2px; }
+    .input-wrapper { position: relative; display: flex; align-items: center; }
+    .input-icon { position: absolute; left: 14px; font-size: 16px; color: #94a3b8; pointer-events: none; }
+    .form-input { width: 100%; padding: 12px 14px 12px 42px; border: 1.5px solid #cbd5e1; border-radius: 12px; font-size: 15px; font-weight: 600; color: #0f172a; background: #ffffff; outline: none; }
+    .form-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12); background: #f0fdf4; }
+    .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .trace-preview-box { background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 2px dashed #34d399; border-radius: 12px; padding: 12px; text-align: center; margin-top: 10px; }
+    .trace-preview-label { font-size: 11px; font-weight: 700; color: #065f46; text-transform: uppercase; }
+    .trace-preview-val { font-size: 16px; font-weight: 800; color: #064e3b; font-family: monospace; letter-spacing: 1px; margin-top: 2px; }
+    .btn-group-sticky { display: flex; gap: 10px; margin-top: 20px; }
+    .btn { flex: 1; padding: 14px 16px; border-radius: 14px; font-size: 15px; font-weight: 700; cursor: pointer; border: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary { background: linear-gradient(135deg, #059669 0%, #10b981 100%); color: white; box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3); }
+    .btn-danger { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+    .btn-outline { background: #f8fafc; border: 1.5px solid #cbd5e1; color: #334155; }
+    .batch-item { background: white; border: 1.5px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px; }
+    .batch-item.active-item { border-color: #10b981; background: #f0fdf4; }
+    .batch-item-top { display: flex; justify-content: space-between; align-items: flex-start; }
+    .batch-prod { font-size: 16px; font-weight: 800; color: #0f172a; }
+    .batch-tag { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 6px; background: #dcfce7; color: #15803d; }
+    .batch-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 13px; color: #475569; }
+    .batch-actions { display: flex; gap: 8px; border-top: 1px dashed var(--border); padding-top: 10px; margin-top: 4px; }
+    .btn-sm { padding: 8px 12px; font-size: 12px; font-weight: 700; border-radius: 8px; border: 1px solid var(--border); background: white; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
+    .btn-sm-print { background: #059669; color: white; border-color: #059669; }
+    .btn-sm-edit { background: #f1f5f9; color: #0f172a; }
+    .btn-sm-del { background: #fef2f2; color: #dc2626; border-color: #fecaca; margin-left: auto; }
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 20px; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.2s ease; }
+    .modal-overlay.show { opacity: 1; pointer-events: auto; }
+    .modal-box { background: white; border-radius: 24px; max-width: 440px; width: 100%; padding: 24px; text-align: center; transform: scale(0.95); transition: transform 0.2s ease; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2); }
+    .modal-overlay.show .modal-box { transform: scale(1); }
+    .modal-icon { width: 56px; height: 56px; border-radius: 50%; background: #ecfdf5; color: #059669; display: inline-flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 12px; }
+    .modal-icon.icon-danger { background: #fef2f2; color: #dc2626; }
+    .modal-title { font-size: 18px; font-weight: 800; color: #0f172a; margin-bottom: 8px; }
+    .modal-msg { font-size: 14px; color: #64748b; margin-bottom: 18px; line-height: 1.5; }
+    .modal-summary { background: #f8fafc; border-radius: 12px; padding: 12px; font-size: 13px; text-align: left; margin-bottom: 18px; border: 1px solid var(--border); }
+    .modal-summary-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .modal-actions { display: flex; gap: 10px; }
+    #modalQrCanvas { margin: 8px auto; border: 1px solid #cbd5e1; padding: 4px; border-radius: 10px; background: white; width: 130px !important; height: 130px !important; display: block; }
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(100px); background: #0f172a; color: white; padding: 12px 22px; border-radius: 99px; font-size: 14px; font-weight: 700; box-shadow: 0 10px 25px rgba(0,0,0,0.3); z-index: 200; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); display: flex; align-items: center; gap: 8px; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    @media print {
+      body * { visibility: hidden; }
+      #printArea, #printArea * { visibility: visible; }
+      #printArea { position: absolute; left: 0; top: 0; width: 100%; border: 2px solid #000 !important; }
     }
   </style>
 </head>
 <body>
-
-  <div class="header-bar">
-    <div class="brand">
-      <h1>🏢 CỔNG QUẢN LÝ XUẤT HÀNG — C.P. VIỆT NAM</h1>
-      <p>Dành riêng cho chủ cơ sở tạo mã QR và in tem dán lô hàng</p>
+  <header class="app-header">
+    <div class="header-top">
+      <div>
+        <h1 class="brand-title">C.P. VIỆT NAM — XUẤT KHO</h1>
+        <div class="brand-sub">Quản lý lô hàng & In tem QR dán thịt</div>
+      </div>
+      <a href="index.html" class="btn-view-scan" target="_blank">👁️ Khách Quét</a>
     </div>
-    <a href="index.html" class="link-live-btn" target="_blank">👁️ Xem Trang Khách Quét</a>
+  </header>
+
+  <div class="nav-tabs">
+    <button class="tab-btn active" id="tabFormBtn" onclick="switchTab('form')">✍️ Nhập / Sửa Lô Hàng</button>
+    <button class="tab-btn" id="tabListBtn" onclick="switchTab('list')">📋 Lịch Sử (<span id="batchCount">0</span>)</button>
   </div>
 
-  <div class="container">
-    <!-- Form thông tin lô hàng -->
-    <div class="card">
-      <h2 class="card-title">📦 Thông Tin Lô Hàng Xuất Kho</h2>
-      <p class="card-desc">Chỉnh sửa thông tin để dán nhãn tem và xuất mã QR</p>
-
-      <div class="form-group">
-        <label>Tên Sản Phẩm</label>
-        <input type="text" class="form-control" value="Heo mảnh 3 máu" id="prodName">
-      </div>
-
-      <div class="form-group">
-        <label>Nhà Cung Cấp</label>
-        <input type="text" class="form-control" value="Công ty Cổ phần Chăn nuôi C.P. Việt Nam – Chi nhánh Vũng Tàu" id="supplier">
-      </div>
-
-      <div class="row-2">
+  <main class="main-container">
+    <div id="viewForm">
+      <div class="card">
+        <h2 class="section-title" id="formHeaderTitle"><span>📦</span> Thông Tin Lô Hàng Xuất Kho</h2>
         <div class="form-group">
-          <label>Mã Hàng Hóa</label>
-          <input type="text" class="form-control" value="22SW2242460001" id="prodCode">
+          <label class="form-label">Tên sản phẩm <span class="req">*</span></label>
+          <div class="input-wrapper"><span class="input-icon">🥩</span><input type="text" id="inpProdName" class="form-input" value="Heo mảnh 3 máu" required></div>
         </div>
         <div class="form-group">
-          <label>Số Hóa Đơn</label>
-          <input type="text" class="form-control" value="17961" id="invoiceNo">
+          <label class="form-label">Nhà cung cấp <span class="req">*</span></label>
+          <div class="input-wrapper"><span class="input-icon">🏢</span><input type="text" id="inpSupplier" class="form-input" value="Công ty Cổ phần Chăn nuôi C.P. Việt Nam – Chi nhánh Vũng Tàu"></div>
         </div>
-      </div>
-
-      <div class="row-2">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Mã hàng hóa <span class="req">*</span></label>
+            <div class="input-wrapper"><span class="input-icon">🔖</span><input type="text" id="inpProdCode" class="form-input" value="22SW2242460001"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Số hóa đơn <span class="req">*</span></label>
+            <div class="input-wrapper"><span class="input-icon">📄</span><input type="text" id="inpInvoiceNo" class="form-input" value="17961" oninput="updateTraceCodePreview()"></div>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Ngày hóa đơn</label>
+            <div class="input-wrapper"><span class="input-icon">📅</span><input type="text" id="inpInvoiceDate" class="form-input" value="23/08/2026"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Ngày giết mổ <span class="req">*</span></label>
+            <div class="input-wrapper"><span class="input-icon">🐖</span><input type="text" id="inpSlaughterDate" class="form-input" value="23/08/2026" oninput="updateTraceCodePreview()"></div>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Đơn đặt hàng</label>
+            <div class="input-wrapper"><span class="input-icon">📋</span><input type="text" id="inpOrderNo" class="form-input" value="505401001063456"></div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Khối lượng (Kg) <span class="req">*</span></label>
+            <div class="input-wrapper"><span class="input-icon">⚖️</span><input type="text" id="inpWeight" class="form-input" value="37,6 kg" style="font-weight: 800; color: #dc2626;"></div>
+          </div>
+        </div>
         <div class="form-group">
-          <label>Ngày Hóa Đơn</label>
-          <input type="text" class="form-control" value="23/08/2026" id="invoiceDate">
+          <label class="form-label">Đơn vị nhận hàng <span class="req">*</span></label>
+          <div class="input-wrapper"><span class="input-icon">🏪</span><input type="text" id="inpReceiver" class="form-input" value="Hộ kinh doanh Phan Văn Tính"></div>
         </div>
-        <div class="form-group">
-          <label>Ngày Giết Mổ</label>
-          <input type="text" class="form-control" value="23/08/2026" id="slaughterDate">
+        <div class="trace-preview-box">
+          <div class="trace-preview-label">Mã Truy Xuất Điện Tử Tự Động</div>
+          <div class="trace-preview-val" id="lblTracePreview">HEO-20260823-17961</div>
         </div>
-      </div>
-
-      <div class="row-2">
-        <div class="form-group">
-          <label>Đơn Đặt Hàng</label>
-          <input type="text" class="form-control" value="505401001063456" id="orderNo">
+        <div class="btn-group-sticky">
+          <button type="button" class="btn btn-outline" onclick="resetFormToNew()">🔄 Làm Mới</button>
+          <button type="button" class="btn btn-primary" onclick="promptSaveConfirmation()">💾 Lưu Lô Hàng</button>
         </div>
-        <div class="form-group">
-          <label>Khối Lượng</label>
-          <input type="text" class="form-control" value="37,6 kg" id="weight">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Đơn Vị Nhận Hàng</label>
-        <input type="text" class="form-control" value="Hộ kinh doanh Phan Văn Tính" id="receiver">
-      </div>
-
-      <div class="form-group">
-        <label>Mã Truy Xuất Điện Tử</label>
-        <input type="text" class="form-control" value="HEO-20260823-17961" id="traceCode" style="font-family: monospace; font-weight: 800; color: #047857;">
       </div>
     </div>
+    <div id="viewList" style="display: none;">
+      <div id="batchListContainer"></div>
+    </div>
+  </main>
 
-    <!-- Cột tạo mã QR & In tem -->
-    <div class="card">
-      <h2 class="card-title">✨ Bộ Xuất Mã QR & In Tem Dán</h2>
-      <p class="card-desc">Mã QR trỏ về trang web tra cứu chính thức</p>
-
-      <div class="qr-preview-box">
-        <div id="qr-holder"></div>
-        <div style="font-size: 12px; font-weight: 700; color: #059669; margin-top: 10px;">
-          🔗 Trỏ tới: https://mrkhang-khoi.github.io/truyxuatnguongoc/
-        </div>
+  <div class="modal-overlay" id="saveConfirmModal">
+    <div class="modal-box">
+      <div class="modal-icon">✅</div>
+      <h3 class="modal-title">Xác Nhận Lưu Lô Hàng?</h3>
+      <p class="modal-msg">Kiểm tra kỹ thông tin xuất kho trước khi lưu:</p>
+      <div class="modal-summary">
+        <div class="modal-summary-row"><b>Sản phẩm:</b> <span id="sumProd">-</span></div>
+        <div class="modal-summary-row"><b>Số HĐ:</b> <span id="sumInv">-</span></div>
+        <div class="modal-summary-row"><b>Ngày mổ:</b> <span id="sumDate">-</span></div>
+        <div class="modal-summary-row"><b>Khối lượng:</b> <span id="sumWeight" style="color: #dc2626; font-weight: 800;">-</span></div>
+        <div class="modal-summary-row"><b>Đơn vị nhận:</b> <span id="sumReceiver">-</span></div>
+        <div class="modal-summary-row"><b>Mã truy xuất:</b> <span id="sumTrace" style="font-family: monospace; font-weight: 700; color: #047857;">-</span></div>
       </div>
-
-      <div class="form-group">
-        <label>Chọn Màu Mã QR Thương Hiệu:</label>
-        <div class="theme-grid">
-          <button class="theme-btn active" onclick="setTheme('emerald')">
-            <div class="swatch" style="background: #059669;"></div>
-            Emerald
-          </button>
-          <button class="theme-btn" onclick="setTheme('cp_red')">
-            <div class="swatch" style="background: #dc2626;"></div>
-            Đỏ C.P
-          </button>
-          <button class="theme-btn" onclick="setTheme('royal_blue')">
-            <div class="swatch" style="background: #2563eb;"></div>
-            Navy
-          </button>
-          <button class="theme-btn" onclick="setTheme('gold')">
-            <div class="swatch" style="background: #d97706;"></div>
-            Gold
-          </button>
-        </div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closeModal('saveConfirmModal')">Quay Lại Sửa</button>
+        <button class="btn btn-primary" onclick="executeSaveBatch()">Đồng Ý Lưu</button>
       </div>
-
-      <button class="btn-main" onclick="downloadHD_QR()">
-        <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-          <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-        </svg>
-        Tải Ảnh Mã QR HD (Dán Bao Bì)
-      </button>
-
-      <a href="tem_dan_truy_xuat.html" target="_blank" class="btn-sub">
-        <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-          <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
-        </svg>
-        Mở & In Mẫu Tem Dán Sản Phẩm
-      </a>
     </div>
   </div>
+
+  <div class="modal-overlay" id="deleteConfirmModal">
+    <div class="modal-box">
+      <div class="modal-icon icon-danger">⚠️</div>
+      <h3 class="modal-title">Xóa Lô Hàng Này?</h3>
+      <p class="modal-msg">Bạn có chắc chắn muốn xóa dữ liệu lô hàng này?</p>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closeModal('deleteConfirmModal')">Hủy Bỏ</button>
+        <button class="btn btn-danger" id="btnExecuteDelete">Xác Nhận Xóa</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="printModal">
+    <div class="modal-box" style="max-width: 480px;">
+      <h3 class="modal-title">🏷️ Tem Nhãn In Dán Bao Bì</h3>
+      <p class="modal-msg" style="margin-bottom: 10px;">Mã QR chuẩn công nghiệp tương thích 100% mọi máy quét</p>
+      <div id="printArea" style="background: white; border: 2.5px solid #059669; border-radius: 14px; padding: 14px; margin-bottom: 16px; text-align: left;">
+        <div style="display: flex; justify-content: space-between; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 8px;">
+          <span style="font-size: 10px; font-weight: 800; color: #065f46; text-transform: uppercase;">C.P. VIỆT NAM — CN VŨNG TÀU</span>
+          <span style="font-size: 9px; font-weight: 800; background: #fef08a; color: #713f12; padding: 2px 6px; border-radius: 99px;">ĐÃ KIỂM DỊCH</span>
+        </div>
+        <div style="font-size: 16px; font-weight: 800; color: #047857;" id="lblPrintProdName">Heo mảnh 3 máu</div>
+        <div style="font-size: 11px; color: #64748b; margin-bottom: 8px;" id="lblPrintSub">Mã hàng: 22SW2242460001 | HĐ: 17961</div>
+        <div style="display: grid; grid-template-columns: 1.4fr 1fr; gap: 8px; align-items: center;">
+          <div style="font-size: 11px; line-height: 1.4; color: #1e293b;">
+            <div><b>Ngày mổ:</b> <span id="lblPrintDate">23/08/2026</span></div>
+            <div><b>Khối lượng:</b> <span id="lblPrintWeight" style="color: #dc2626; font-weight: 800; font-size: 13px;">37,6 kg</span></div>
+            <div><b>Nhận hàng:</b> <span id="lblPrintReceiver">HKD Phan Văn Tính</span></div>
+            <div style="margin-top: 4px; font-size: 10px; color: #047857; font-family: monospace; font-weight: 700;" id="lblPrintTrace">HEO-20260823-17961</div>
+          </div>
+          <div style="text-align: center;">
+            <canvas id="modalQrCanvas"></canvas>
+            <div style="font-size: 9px; font-weight: 700; color: #059669;">Quét Zalo / Camera</div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" onclick="closeModal('printModal')">Đóng</button>
+        <button class="btn btn-primary" onclick="window.print()">🖨️ In Tem Này</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="appToast"><span>✅</span> <span id="toastMsg">Thao tác thành công!</span></div>
 
   <script>
-    const LIVE_URL = "https://mrkhang-khoi.github.io/truyxuatnguongoc/";
-    const shieldSvg = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23059669"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>`;
+    const STORAGE_KEY = 'CP_VIETNAM_BATCH_LIST_V1';
+    const BASE_SCAN_URL = 'https://mrkhang-khoi.github.io/truyxuatnguongoc/';
+    let batchList = [];
+    let editingBatchId = null;
+    let pendingDeleteId = null;
 
-    const colorThemes = {
-      emerald: { c1: '#059669', c2: '#064e3b', sq: '#047857', dot: '#10b981' },
-      cp_red: { c1: '#dc2626', c2: '#991b1b', sq: '#b91c1c', dot: '#ef4444' },
-      royal_blue: { c1: '#2563eb', c2: '#1e3a8a', sq: '#1d4ed8', dot: '#3b82f6' },
-      gold: { c1: '#d97706', c2: '#78350f', sq: '#b45309', dot: '#f59e0b' }
-    };
+    function initData() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try { batchList = JSON.parse(saved); } catch (e) { batchList = []; }
+      }
+      if (!batchList || batchList.length === 0) {
+        batchList = [{
+          id: 'HEO-20260823-17961',
+          prodName: 'Heo mảnh 3 máu',
+          supplier: 'Công ty Cổ phần Chăn nuôi C.P. Việt Nam – Chi nhánh Vũng Tàu',
+          prodCode: '22SW2242460001',
+          invoiceNo: '17961',
+          invoiceDate: '23/08/2026',
+          orderNo: '505401001063456',
+          slaughterDate: '23/08/2026',
+          weight: '37,6 kg',
+          receiver: 'Hộ kinh doanh Phan Văn Tính',
+          updatedAt: new Date().toISOString()
+        }];
+        saveToStorage();
+      }
+      renderBatchList();
+      updateBatchCount();
+    }
 
-    let curTheme = 'emerald';
-    let qrCode;
+    function saveToStorage() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(batchList));
+      updateBatchCount();
+    }
 
-    function renderQR() {
-      const th = colorThemes[curTheme];
-      qrCode = new QRCodeStyling({
-        width: 240,
-        height: 240,
-        type: "canvas",
-        data: LIVE_URL,
-        image: shieldSvg,
-        dotsOptions: {
-          color: th.c1,
-          gradient: {
-            type: "linear",
-            rotation: 45,
-            colorStops: [{ offset: 0, color: th.c1 }, { offset: 1, color: th.c2 }]
-          },
-          type: "dots"
-        },
-        imageOptions: { margin: 5, imageSize: 0.35 },
-        cornersSquareOptions: { color: th.sq, type: "extra-rounded" },
-        cornersDotOptions: { color: th.dot, type: "dot" },
-        qrOptions: { errorCorrectionLevel: "H" }
+    function updateBatchCount() {
+      document.getElementById('batchCount').innerText = batchList.length;
+    }
+
+    function generateTraceCode(dateStr, invoiceNo) {
+      const cleanDate = (dateStr || '').replace(/[\/\-\.]/g, '');
+      const cleanInv = (invoiceNo || '').trim();
+      return 'HEO-' + (cleanDate || '20260823') + '-' + (cleanInv || '00000');
+    }
+
+    function updateTraceCodePreview() {
+      const dateVal = document.getElementById('inpSlaughterDate').value;
+      const invVal = document.getElementById('inpInvoiceNo').value;
+      document.getElementById('lblTracePreview').innerText = generateTraceCode(dateVal, invVal);
+    }
+
+    function switchTab(tab) {
+      document.getElementById('tabFormBtn').classList.toggle('active', tab === 'form');
+      document.getElementById('tabListBtn').classList.toggle('active', tab === 'list');
+      document.getElementById('viewForm').style.display = tab === 'form' ? 'block' : 'none';
+      document.getElementById('viewList').style.display = tab === 'list' ? 'block' : 'none';
+    }
+
+    function promptSaveConfirmation() {
+      const prodName = document.getElementById('inpProdName').value.trim();
+      const invoiceNo = document.getElementById('inpInvoiceNo').value.trim();
+      const slaughterDate = document.getElementById('inpSlaughterDate').value.trim();
+      const weight = document.getElementById('inpWeight').value.trim();
+
+      if (!prodName || !invoiceNo || !slaughterDate || !weight) {
+        showToast('⚠️ Vui lòng điền đầy đủ thông tin bắt buộc (*)');
+        return;
+      }
+
+      const traceCode = generateTraceCode(slaughterDate, invoiceNo);
+      document.getElementById('sumProd').innerText = prodName;
+      document.getElementById('sumInv').innerText = invoiceNo;
+      document.getElementById('sumDate').innerText = slaughterDate;
+      document.getElementById('sumWeight').innerText = weight;
+      document.getElementById('sumReceiver').innerText = document.getElementById('inpReceiver').value;
+      document.getElementById('sumTrace').innerText = traceCode;
+      openModal('saveConfirmModal');
+    }
+
+    function executeSaveBatch() {
+      const slaughterDate = document.getElementById('inpSlaughterDate').value.trim();
+      const invoiceNo = document.getElementById('inpInvoiceNo').value.trim();
+      const traceCode = generateTraceCode(slaughterDate, invoiceNo);
+
+      const batchData = {
+        id: traceCode,
+        prodName: document.getElementById('inpProdName').value.trim(),
+        supplier: document.getElementById('inpSupplier').value.trim(),
+        prodCode: document.getElementById('inpProdCode').value.trim(),
+        invoiceNo: invoiceNo,
+        invoiceDate: document.getElementById('inpInvoiceDate').value.trim(),
+        orderNo: document.getElementById('inpOrderNo').value.trim(),
+        slaughterDate: slaughterDate,
+        weight: document.getElementById('inpWeight').value.trim(),
+        receiver: document.getElementById('inpReceiver').value.trim(),
+        updatedAt: new Date().toISOString()
+      };
+
+      if (editingBatchId) {
+        const idx = batchList.findIndex(b => b.id === editingBatchId);
+        if (idx !== -1) batchList[idx] = batchData;
+        else batchList.unshift(batchData);
+        editingBatchId = null;
+        showToast('✅ Đã cập nhật lô hàng thành công!');
+      } else {
+        const existIdx = batchList.findIndex(b => b.id === traceCode);
+        if (existIdx !== -1) batchList[existIdx] = batchData;
+        else batchList.unshift(batchData);
+        showToast('✅ Đã thêm mới và lưu lô hàng!');
+      }
+
+      saveToStorage();
+      renderBatchList();
+      closeModal('saveConfirmModal');
+      resetFormToNew();
+      switchTab('list');
+    }
+
+    function renderBatchList() {
+      const container = document.getElementById('batchListContainer');
+      if (batchList.length === 0) {
+        container.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#64748b;"><div style="font-size:40px;">📦</div><b>Chưa có lô hàng nào</b></div>';
+        return;
+      }
+
+      container.innerHTML = batchList.map((b, index) => `
+        <div class="batch-item ${index === 0 ? 'active-item' : ''}">
+          <div class="batch-item-top">
+            <div>
+              <div class="batch-prod">${escapeHtml(b.prodName)}</div>
+              <div style="font-size: 12px; color: #64748b;">Mã truy xuất: <b style="font-family: monospace; color: #047857;">${escapeHtml(b.id)}</b></div>
+            </div>
+            <span class="batch-tag">${index === 0 ? '⭐ Mới Nhất' : 'Đã Lưu'}</span>
+          </div>
+          <div class="batch-info-grid">
+            <div><b>Số HĐ:</b> ${escapeHtml(b.invoiceNo)}</div>
+            <div><b>Ngày mổ:</b> ${escapeHtml(b.slaughterDate)}</div>
+            <div><b>Khối lượng:</b> <span style="color: #dc2626; font-weight: 800;">${escapeHtml(b.weight)}</span></div>
+            <div><b>Nhận:</b> ${escapeHtml(b.receiver)}</div>
+          </div>
+          <div class="batch-actions">
+            <button class="btn-sm btn-sm-print" onclick="openPrintModal('${escapeHtml(b.id)}')">🖨️ In Tem QR</button>
+            <button class="btn-sm btn-sm-edit" onclick="loadBatchToEdit('${escapeHtml(b.id)}')">✏️ Sửa</button>
+            <button class="btn-sm btn-sm-del" onclick="promptDelete('${escapeHtml(b.id)}')">🗑️ Xóa</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function loadBatchToEdit(id) {
+      const b = batchList.find(item => item.id === id);
+      if (!b) return;
+      editingBatchId = b.id;
+      document.getElementById('inpProdName').value = b.prodName;
+      document.getElementById('inpSupplier').value = b.supplier;
+      document.getElementById('inpProdCode').value = b.prodCode;
+      document.getElementById('inpInvoiceNo').value = b.invoiceNo;
+      document.getElementById('inpInvoiceDate').value = b.invoiceDate;
+      document.getElementById('inpOrderNo').value = b.orderNo;
+      document.getElementById('inpSlaughterDate').value = b.slaughterDate;
+      document.getElementById('inpWeight').value = b.weight;
+      document.getElementById('inpReceiver').value = b.receiver;
+      document.getElementById('formHeaderTitle').innerHTML = '<span>✏️</span> Đang Chỉnh Sửa Lô: ' + b.invoiceNo;
+      updateTraceCodePreview();
+      switchTab('form');
+    }
+
+    function resetFormToNew() {
+      editingBatchId = null;
+      document.getElementById('inpProdName').value = 'Heo mảnh 3 máu';
+      document.getElementById('inpSupplier').value = 'Công ty Cổ phần Chăn nuôi C.P. Việt Nam – Chi nhánh Vũng Tàu';
+      document.getElementById('inpProdCode').value = '22SW2242460001';
+      document.getElementById('inpInvoiceNo').value = '';
+      document.getElementById('inpInvoiceDate').value = formatDateNow();
+      document.getElementById('inpOrderNo').value = '';
+      document.getElementById('inpSlaughterDate').value = formatDateNow();
+      document.getElementById('inpWeight').value = '';
+      document.getElementById('inpReceiver').value = '';
+      document.getElementById('formHeaderTitle').innerHTML = '<span>📦</span> Nhập Lô Hàng Xuất Kho Mới';
+      updateTraceCodePreview();
+    }
+
+    function formatDateNow() {
+      const d = new Date();
+      const day = String(d.getDate()).padStart(2, '0');
+      const month = String(d.getMonth() + 1).padStart(2, '0');
+      return day + '/' + month + '/' + d.getFullYear();
+    }
+
+    function promptDelete(id) {
+      pendingDeleteId = id;
+      document.getElementById('btnExecuteDelete').onclick = () => {
+        batchList = batchList.filter(b => b.id !== pendingDeleteId);
+        saveToStorage();
+        renderBatchList();
+        closeModal('deleteConfirmModal');
+        showToast('🗑️ Đã xóa lô hàng thành công!');
+      };
+      openModal('deleteConfirmModal');
+    }
+
+    function openPrintModal(id) {
+      const b = batchList.find(item => item.id === id);
+      if (!b) return;
+      document.getElementById('lblPrintProdName').innerText = b.prodName;
+      document.getElementById('lblPrintSub').innerText = 'Mã hàng: ' + b.prodCode + ' | HĐ: ' + b.invoiceNo;
+      document.getElementById('lblPrintDate').innerText = b.slaughterDate;
+      document.getElementById('lblPrintWeight').innerText = b.weight;
+      document.getElementById('lblPrintReceiver').innerText = b.receiver;
+      document.getElementById('lblPrintTrace').innerText = b.id;
+
+      const scanUrl = BASE_SCAN_URL + '?id=' + encodeURIComponent(b.id);
+      const canvas = document.getElementById('modalQrCanvas');
+
+      QRCode.toCanvas(canvas, scanUrl, {
+        width: 130,
+        margin: 2,
+        color: { dark: '#047857', light: '#ffffff' },
+        errorCorrectionLevel: 'M'
       });
-      document.getElementById('qr-holder').innerHTML = '';
-      qrCode.append(document.getElementById('qr-holder'));
+      openModal('printModal');
     }
 
-    function setTheme(key) {
-      curTheme = key;
-      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-      event.currentTarget.classList.add('active');
-      renderQR();
+    function openModal(id) { document.getElementById(id).classList.add('show'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+    function showToast(msg) {
+      const toast = document.getElementById('appToast');
+      document.getElementById('toastMsg').innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+    function escapeHtml(str) {
+      return (str || '').replace(/[&<>'"]/g, tag => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+      }[tag] || tag));
     }
 
-    function downloadHD_QR() {
-      qrCode.download({ name: `Ma_QR_Xuat_Hang_${curTheme}`, extension: "png" });
-    }
-
-    window.addEventListener('load', renderQR);
+    window.addEventListener('load', initData);
   </script>
 </body>
 </html>

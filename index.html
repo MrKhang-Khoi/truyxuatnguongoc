@@ -2,12 +2,9 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Truy Xuất Nguồn Gốc Thực Phẩm - C.P. Việt Nam</title>
-  <meta name="description" content="Trang xác thực nguồn gốc lô hàng heo mảnh 3 máu chính hãng C.P. Việt Nam">
-  <!-- Open Graph -->
-  <meta property="og:title" content="Truy Xuất Nguồn Gốc Thực Phẩm - C.P. Việt Nam">
-  <meta property="og:description" content="Lô hàng: Heo mảnh 3 máu - C.P. Việt Nam CN Vũng Tàu. Khối lượng: 37,6 kg. Đã kiểm dịch thú y.">
+  <meta name="description" content="Trang xác thực nguồn gốc thịt heo chính hãng C.P. Việt Nam">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +12,7 @@
   <style>
     :root {
       --primary: #059669;
-      --primary-dark: #065f46;
+      --primary-dark: #047857;
       --text-main: #0f172a;
       --text-muted: #64748b;
       --border: #e2e8f0;
@@ -45,7 +42,6 @@
       margin: 0 auto;
     }
 
-    /* Trace Card */
     .trace-card {
       background: white;
       border-radius: 28px;
@@ -55,7 +51,6 @@
       margin-top: 8px;
     }
 
-    /* Header */
     .trace-header {
       background: linear-gradient(135deg, #047857 0%, #10b981 100%);
       color: white;
@@ -106,7 +101,6 @@
       text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    /* Body Details */
     .trace-body {
       padding: 12px 18px 26px;
     }
@@ -163,7 +157,6 @@
       font-size: 18px;
     }
 
-    /* Trace Code Tag */
     .trace-code-box {
       margin-top: 18px;
       padding: 14px;
@@ -214,7 +207,6 @@
 
   <div class="container">
     <div class="trace-card">
-      <!-- Header -->
       <div class="trace-header">
         <div class="badge-verified">
           <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
@@ -223,10 +215,9 @@
           Chứng Nhận Kiểm Dịch Thú Y
         </div>
         <h1 class="main-title">TRUY XUẤT NGUỒN GỐC THỰC PHẨM</h1>
-        <h2 class="product-title">Heo mảnh 3 máu</h2>
+        <h2 class="product-title" id="viewProdName">Heo mảnh 3 máu</h2>
       </div>
 
-      <!-- Body Content -->
       <div class="trace-body">
         <div class="info-list">
           <!-- Nhà cung cấp -->
@@ -234,7 +225,7 @@
             <div class="info-icon">✅</div>
             <div class="info-content">
               <div class="info-label">Nhà cung cấp</div>
-              <div class="info-value supplier-highlight">Công ty Cổ phần Chăn nuôi C.P. Việt Nam – Chi nhánh Vũng Tàu</div>
+              <div class="info-value supplier-highlight" id="viewSupplier">Công ty Cổ phần Chăn nuôi C.P. Việt Nam – Chi nhánh Vũng Tàu</div>
             </div>
           </div>
 
@@ -243,7 +234,7 @@
             <div class="info-icon">🔖</div>
             <div class="info-content">
               <div class="info-label">Mã hàng hóa</div>
-              <div class="info-value">22SW2242460001</div>
+              <div class="info-value" id="viewProdCode">22SW2242460001</div>
             </div>
           </div>
 
@@ -252,7 +243,7 @@
             <div class="info-icon">📄</div>
             <div class="info-content">
               <div class="info-label">Số hóa đơn</div>
-              <div class="info-value">17961</div>
+              <div class="info-value" id="viewInvoiceNo">17961</div>
             </div>
           </div>
 
@@ -261,7 +252,7 @@
             <div class="info-icon">📅</div>
             <div class="info-content">
               <div class="info-label">Ngày hóa đơn</div>
-              <div class="info-value">23/08/2026</div>
+              <div class="info-value" id="viewInvoiceDate">23/08/2026</div>
             </div>
           </div>
 
@@ -270,7 +261,7 @@
             <div class="info-icon">📋</div>
             <div class="info-content">
               <div class="info-label">Đơn đặt hàng</div>
-              <div class="info-value">505401001063456</div>
+              <div class="info-value" id="viewOrderNo">505401001063456</div>
             </div>
           </div>
 
@@ -279,7 +270,7 @@
             <div class="info-icon">🐖</div>
             <div class="info-content">
               <div class="info-label">Ngày giết mổ</div>
-              <div class="info-value">23/08/2026</div>
+              <div class="info-value" id="viewSlaughterDate">23/08/2026</div>
             </div>
           </div>
 
@@ -288,7 +279,7 @@
             <div class="info-icon">⚖️</div>
             <div class="info-content">
               <div class="info-label">Khối lượng</div>
-              <div class="info-value weight-highlight">37,6 kg</div>
+              <div class="info-value weight-highlight" id="viewWeight">37,6 kg</div>
             </div>
           </div>
 
@@ -297,7 +288,7 @@
             <div class="info-icon">🏪</div>
             <div class="info-content">
               <div class="info-label">Đơn vị nhận hàng</div>
-              <div class="info-value">Hộ kinh doanh Phan Văn Tính</div>
+              <div class="info-value" id="viewReceiver">Hộ kinh doanh Phan Văn Tính</div>
             </div>
           </div>
         </div>
@@ -305,7 +296,7 @@
         <!-- Mã truy xuất -->
         <div class="trace-code-box">
           <div class="trace-code-label">Mã truy xuất điện tử</div>
-          <div class="trace-code-val">HEO-20260823-17961</div>
+          <div class="trace-code-val" id="viewTraceCode">HEO-20260823-17961</div>
         </div>
 
         <div class="security-badge">
@@ -323,5 +314,65 @@
     </div>
   </div>
 
+  <script>
+    const STORAGE_KEY = 'CP_VIETNAM_BATCH_LIST_V1';
+
+    function loadCustomerView() {
+      // 1. Kiểm tra tham số id trên URL: ?id=HEO-20260823-17961
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryId = urlParams.get('id') || urlParams.get('hd');
+
+      let currentBatch = null;
+
+      // 2. Lấy dữ liệu từ bộ nhớ
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        try {
+          const list = JSON.parse(saved);
+          if (Array.isArray(list) && list.length > 0) {
+            if (queryId) {
+              currentBatch = list.find(b => b.id === queryId || b.invoiceNo === queryId);
+            }
+            if (!currentBatch) {
+              // Lấy lô hàng mới nhất (dòng đầu tiên)
+              currentBatch = list[0];
+            }
+          }
+        } catch (e) {
+          console.error(e);
+        }
+      }
+
+      // 3. Nếu chưa có dữ liệu tùy chỉnh, dùng dữ liệu gốc từ chứng chỉ C.P.
+      if (!currentBatch) {
+        currentBatch = {
+          id: 'HEO-20260823-17961',
+          prodName: 'Heo mảnh 3 máu',
+          supplier: 'Công ty Cổ phần Chăn nuôi C.P. Việt Nam – Chi nhánh Vũng Tàu',
+          prodCode: '22SW2242460001',
+          invoiceNo: '17961',
+          invoiceDate: '23/08/2026',
+          orderNo: '505401001063456',
+          slaughterDate: '23/08/2026',
+          weight: '37,6 kg',
+          receiver: 'Hộ kinh doanh Phan Văn Tính'
+        };
+      }
+
+      // 4. Đổ dữ liệu ra màn hình
+      document.getElementById('viewProdName').innerText = currentBatch.prodName || 'Heo mảnh 3 máu';
+      document.getElementById('viewSupplier').innerText = currentBatch.supplier || 'C.P. Việt Nam';
+      document.getElementById('viewProdCode').innerText = currentBatch.prodCode || '22SW2242460001';
+      document.getElementById('viewInvoiceNo').innerText = currentBatch.invoiceNo || '17961';
+      document.getElementById('viewInvoiceDate').innerText = currentBatch.invoiceDate || '23/08/2026';
+      document.getElementById('viewOrderNo').innerText = currentBatch.orderNo || '505401001063456';
+      document.getElementById('viewSlaughterDate').innerText = currentBatch.slaughterDate || '23/08/2026';
+      document.getElementById('viewWeight').innerText = currentBatch.weight || '37,6 kg';
+      document.getElementById('viewReceiver').innerText = currentBatch.receiver || 'Hộ kinh doanh Phan Văn Tính';
+      document.getElementById('viewTraceCode').innerText = currentBatch.id || 'HEO-20260823-17961';
+    }
+
+    window.addEventListener('load', loadCustomerView);
+  </script>
 </body>
 </html>
