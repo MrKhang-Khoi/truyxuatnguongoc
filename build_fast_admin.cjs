@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+﻿const fs = require('fs');
+
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzG0Xsvun05psQGklSnKUCZWfBRE-z8lyl171m3nXq7LpOVaHd0U8IHYzUQgMo7j5Xb/exec';
+
+const adminHtml = `<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -564,12 +568,12 @@
   <div class="toast" id="appToast"><span>✅</span> <span id="toastMsg">Thao tác thành công!</span></div>
 
   <script>
-    const GAS_URL = 'https://script.google.com/macros/s/AKfycbzG0Xsvun05psQGklSnKUCZWfBRE-z8lyl171m3nXq7LpOVaHd0U8IHYzUQgMo7j5Xb/exec';
+    const GAS_URL = '${GAS_URL}';
     const BASE_SCAN_URL = 'https://mrkhang-khoi.github.io/truyxuatnguongoc/';
     const STORAGE_KEY = 'CP_VIETNAM_BATCH_LIST_V1';
 
     function generateTraceCode(dateStr, invoiceNo) {
-      const cleanDate = (dateStr || '').replace(/[/\-\.]/g, '');
+      const cleanDate = (dateStr || '').replace(/[\/\\-\\.]/g, '');
       const cleanInv = (invoiceNo || '').trim();
       return 'HEO-' + (cleanDate || '20260823') + '-' + (cleanInv || '00000');
     }
@@ -607,7 +611,7 @@
 
       // QR to bên trên
       const holder = document.getElementById('qrHolder');
-      holder.innerHTML = '<canvas id="bigQrCanvas"></canvas>';
+      holder.innerHTML = '<canvas id=\"bigQrCanvas\"></canvas>';
       QRCode.toCanvas(document.getElementById('bigQrCanvas'), scanUrl, {
         width: 200,
         margin: 2,
@@ -716,4 +720,7 @@
     });
   </script>
 </body>
-</html>
+</html>`;
+
+fs.writeFileSync('admin.html', adminHtml, 'utf8');
+console.log('✅ Đã cập nhật admin.html với Nút Lưu To Nổi Bật và Form Nhập Siêu Nhanh!');
