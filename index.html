@@ -4,27 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Truy Xuất Nguồn Gốc Thực Phẩm - C.P. Việt Nam</title>
-  <meta name="description" content="Trang tra cứu thông tin nguồn gốc thực phẩm lô hàng heo mảnh 3 máu chính hãng C.P. Việt Nam">
-  <!-- Open Graph / Zalo / Facebook Preview -->
-  <meta property="og:title" content="Truy Xuất Nguồn Gốc - Heo Mảnh 3 Máu">
-  <meta property="og:description" content="Nhà cung cấp: C.P. Việt Nam - Chi nhánh Vũng Tàu. Khối lượng: 37,6 kg. Đã kiểm dịch thú y.">
-  <meta property="og:type" content="website">
+  <meta name="description" content="Trang xác thực nguồn gốc lô hàng heo mảnh 3 máu chính hãng C.P. Việt Nam">
+  <!-- Open Graph -->
+  <meta property="og:title" content="Truy Xuất Nguồn Gốc Thực Phẩm - C.P. Việt Nam">
+  <meta property="og:description" content="Lô hàng: Heo mảnh 3 máu - C.P. Việt Nam CN Vũng Tàu. Khối lượng: 37,6 kg. Đã kiểm dịch thú y.">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
-  <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #059669;
       --primary-dark: #065f46;
-      --primary-light: #ecfdf5;
-      --accent: #dc2626;
       --text-main: #0f172a;
       --text-muted: #64748b;
-      --card-bg: #ffffff;
       --border: #e2e8f0;
-      --shadow-xl: 0 20px 30px -10px rgba(5, 150, 105, 0.12), 0 10px 15px -5px rgba(0, 0, 0, 0.04);
+      --shadow-lg: 0 20px 35px -10px rgba(5, 150, 105, 0.18), 0 10px 15px -5px rgba(0, 0, 0, 0.04);
     }
 
     * {
@@ -35,76 +30,36 @@
     }
 
     body {
-      background: linear-gradient(135deg, #f0fdf4 0%, #f8fafc 50%, #eff6ff 100%);
+      background: linear-gradient(180deg, #ecfdf5 0%, #f8fafc 40%, #f1f5f9 100%);
       color: var(--text-main);
       min-height: 100vh;
-      padding: 16px 12px 60px;
-    }
-
-    .wrapper {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-
-    @media (min-width: 860px) {
-      .wrapper {
-        grid-template-columns: 1.15fr 0.85fr;
-        align-items: start;
-        padding: 20px;
-      }
-    }
-
-    /* Header Banner */
-    .top-header {
-      grid-column: 1 / -1;
-      text-align: center;
-      margin-bottom: 4px;
-    }
-
-    .badge-pill {
-      display: inline-flex;
+      padding: 16px 12px 40px;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 6px;
-      background: #d1fae5;
-      color: #065f46;
-      padding: 6px 16px;
-      border-radius: 9999px;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 10px;
-      border: 1px solid #a7f3d0;
     }
 
-    .page-main-title {
-      font-size: 24px;
-      font-weight: 800;
-      color: #0f172a;
-      letter-spacing: -0.5px;
+    .container {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
     }
 
-    .page-sub-title {
-      font-size: 14px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    /* Left Column: Traceability Card */
+    /* Trace Card */
     .trace-card {
       background: white;
-      border-radius: 24px;
-      box-shadow: var(--shadow-xl);
-      border: 1px solid rgba(16, 185, 129, 0.2);
+      border-radius: 28px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(16, 185, 129, 0.25);
       overflow: hidden;
-      position: relative;
+      margin-top: 8px;
     }
 
+    /* Header */
     .trace-header {
       background: linear-gradient(135deg, #047857 0%, #10b981 100%);
       color: white;
-      padding: 24px 20px 20px;
+      padding: 24px 20px 22px;
       text-align: center;
       position: relative;
     }
@@ -115,33 +70,35 @@
       bottom: 0;
       left: 0;
       right: 0;
-      height: 14px;
+      height: 16px;
       background: white;
-      border-radius: 14px 14px 0 0;
+      border-radius: 16px 16px 0 0;
     }
 
-    .product-badge {
+    .badge-verified {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: rgba(255,255,255,0.22);
-      backdrop-filter: blur(6px);
-      padding: 5px 14px;
-      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.22);
+      backdrop-filter: blur(8px);
+      padding: 6px 16px;
+      border-radius: 9999px;
       font-size: 12px;
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
     }
 
-    .trace-header h2 {
+    .main-title {
       font-size: 19px;
       font-weight: 800;
       letter-spacing: 0.5px;
+      line-height: 1.3;
     }
 
-    .trace-header .product-name {
+    .product-title {
       font-size: 26px;
       font-weight: 800;
       color: #fef08a;
@@ -149,29 +106,24 @@
       text-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
+    /* Body Details */
     .trace-body {
-      padding: 12px 18px 24px;
+      padding: 12px 18px 26px;
     }
 
-    .info-grid {
+    .info-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
     }
 
-    .info-row {
+    .info-item {
       display: flex;
       align-items: flex-start;
       padding: 12px 14px;
       background: #f8fafc;
       border-radius: 14px;
       border: 1px solid #f1f5f9;
-      transition: all 0.2s;
-    }
-
-    .info-row:hover {
-      background: #f0fdf4;
-      border-color: #bbf7d0;
     }
 
     .info-icon {
@@ -185,42 +137,43 @@
       flex: 1;
     }
 
-    .info-title {
-      font-size: 12px;
-      font-weight: 600;
+    .info-label {
+      font-size: 11px;
+      font-weight: 700;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.3px;
+      letter-spacing: 0.4px;
     }
 
-    .info-val {
+    .info-value {
       font-size: 15px;
       font-weight: 700;
       color: var(--text-main);
       margin-top: 2px;
       line-height: 1.4;
+      word-break: break-word;
     }
 
-    .val-supplier {
+    .supplier-highlight {
       color: #047857;
-      font-size: 15px;
     }
 
-    .val-weight {
+    .weight-highlight {
       color: #dc2626;
       font-size: 18px;
     }
 
-    .trace-code-tag {
-      margin-top: 16px;
+    /* Trace Code Tag */
+    .trace-code-box {
+      margin-top: 18px;
       padding: 14px;
       background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
       border: 2px dashed #34d399;
-      border-radius: 14px;
+      border-radius: 16px;
       text-align: center;
     }
 
-    .trace-code-tag .label {
+    .trace-code-label {
       font-size: 11px;
       font-weight: 700;
       color: #065f46;
@@ -228,7 +181,7 @@
       letter-spacing: 0.5px;
     }
 
-    .trace-code-tag .code {
+    .trace-code-val {
       font-size: 19px;
       font-weight: 800;
       color: #064e3b;
@@ -237,531 +190,138 @@
       margin-top: 2px;
     }
 
-    /* Right Column: QR Studio & Designer */
-    .qr-studio {
-      background: white;
-      border-radius: 24px;
-      box-shadow: var(--shadow-xl);
-      border: 1px solid var(--border);
-      padding: 22px 18px;
-    }
-
-    .studio-header {
-      margin-bottom: 16px;
-      text-align: center;
-    }
-
-    .studio-header h3 {
-      font-size: 18px;
-      font-weight: 800;
-      color: #0f172a;
-    }
-
-    .studio-header p {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    /* QR Preview Box */
-    .qr-preview-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at center, #ffffff 60%, #f8fafc 100%);
-      border: 2px solid #e2e8f0;
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 18px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-    }
-
-    #qr-canvas-holder {
+    .security-badge {
       display: flex;
       align-items: center;
       justify-content: center;
-      min-height: 240px;
-    }
-
-    .scan-guide {
+      gap: 6px;
+      margin-top: 20px;
       font-size: 12px;
-      font-weight: 700;
+      font-weight: 600;
       color: #059669;
-      background: #ecfdf5;
-      padding: 4px 12px;
-      border-radius: 9999px;
-      margin-top: 12px;
     }
 
-    /* Controls */
-    .control-group {
-      margin-bottom: 14px;
-    }
-
-    .control-label {
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      color: #334155;
-      margin-bottom: 6px;
-    }
-
-    .theme-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-    }
-
-    .theme-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      padding: 8px 4px;
-      border-radius: 12px;
-      border: 2px solid #e2e8f0;
-      background: #f8fafc;
-      cursor: pointer;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-muted);
-      transition: all 0.2s;
-    }
-
-    .theme-btn.active {
-      border-color: #059669;
-      background: #ecfdf5;
-      color: #047857;
-      box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
-    }
-
-    .theme-swatch {
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-    }
-
-    .style-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-    }
-
-    .style-btn {
-      padding: 8px 4px;
-      border-radius: 10px;
-      border: 1px solid #e2e8f0;
-      background: white;
-      cursor: pointer;
-      font-size: 12px;
-      font-weight: 600;
-      color: #475569;
-      transition: all 0.2s;
+    .footer-note {
       text-align: center;
-    }
-
-    .style-btn.active {
-      border-color: #059669;
-      background: #ecfdf5;
-      color: #047857;
-      font-weight: 700;
-    }
-
-    .btn-action-group {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .btn-main {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 12px 18px;
-      border-radius: 12px;
-      font-size: 14px;
-      font-weight: 700;
-      color: white;
-      background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
-      transition: all 0.2s;
-    }
-
-    .btn-main:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 6px 16px rgba(5, 150, 105, 0.35);
-    }
-
-    .btn-sub {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-size: 13px;
-      font-weight: 600;
-      color: #334155;
-      background: #f1f5f9;
-      border: 1px solid #e2e8f0;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-sub:hover {
-      background: #e2e8f0;
-    }
-
-    @media print {
-      body {
-        background: white;
-        padding: 0;
-      }
-      .qr-studio, .badge-pill, .page-sub-title {
-        display: none !important;
-      }
-      .wrapper {
-        display: block;
-      }
-      .trace-card {
-        box-shadow: none;
-        border: 2px solid #000;
-      }
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 20px;
+      line-height: 1.5;
     }
   </style>
 </head>
 <body>
 
-  <div class="wrapper">
-    <!-- Top Header -->
-    <div class="top-header">
-      <div class="badge-pill">
-        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-          <path d="M10.067.87a2.89 2.89 0 0 0-4.134 0l-.622.638-.89-.011a2.89 2.89 0 0 0-2.924 2.924l.01.89-.636.622a2.89 2.89 0 0 0 0 4.134l.637.622-.011.89a2.89 2.89 0 0 0 2.924 2.924l.89-.01.622.636a2.89 2.89 0 0 0 4.134 0l.622-.637.89.011a2.89 2.89 0 0 0 2.924-2.924l-.01-.89.636-.622a2.89 2.89 0 0 0 0-4.134l-.637-.622.011-.89a2.89 2.89 0 0 0-2.924-2.924l-.89.01-.622-.636zm.287 5.984-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 8.793l2.646-2.647a.5.5 0 0 1 .708.708z"/>
-        </svg>
-        Hệ Thống Xác Thực An Toàn Thực Phẩm
-      </div>
-      <h1 class="page-main-title">TRUY XUẤT NGUỒN GỐC THỰC PHẨM</h1>
-      <p class="page-sub-title">Thông tin xác minh lô hàng thịt heo chính hãng C.P. Việt Nam</p>
-    </div>
-
-    <!-- Left Column: Traceability Info Card -->
+  <div class="container">
     <div class="trace-card">
+      <!-- Header -->
       <div class="trace-header">
-        <span class="product-badge">
+        <div class="badge-verified">
           <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
             <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
           </svg>
-          Đã Kiểm Dịch Thú Y
-        </span>
-        <h2>TRUY XUẤT NGUỒN GỐC THỰC PHẨM</h2>
-        <div class="product-name">Heo mảnh 3 máu</div>
+          Chứng Nhận Kiểm Dịch Thú Y
+        </div>
+        <h1 class="main-title">TRUY XUẤT NGUỒN GỐC THỰC PHẨM</h1>
+        <h2 class="product-title">Heo mảnh 3 máu</h2>
       </div>
 
+      <!-- Body Content -->
       <div class="trace-body">
-        <div class="info-grid">
+        <div class="info-list">
           <!-- Nhà cung cấp -->
-          <div class="info-row">
+          <div class="info-item">
             <div class="info-icon">✅</div>
             <div class="info-content">
-              <div class="info-title">Nhà cung cấp</div>
-              <div class="info-val val-supplier">Công ty Cổ phần Chăn nuôi C.P. Việt Nam – Chi nhánh Vũng Tàu</div>
+              <div class="info-label">Nhà cung cấp</div>
+              <div class="info-value supplier-highlight">Công ty Cổ phần Chăn nuôi C.P. Việt Nam – Chi nhánh Vũng Tàu</div>
             </div>
           </div>
 
           <!-- Mã hàng hóa -->
-          <div class="info-row">
+          <div class="info-item">
             <div class="info-icon">🔖</div>
             <div class="info-content">
-              <div class="info-title">Mã hàng hóa</div>
-              <div class="info-val">22SW2242460001</div>
+              <div class="info-label">Mã hàng hóa</div>
+              <div class="info-value">22SW2242460001</div>
             </div>
           </div>
 
           <!-- Số hóa đơn -->
-          <div class="info-row">
+          <div class="info-item">
             <div class="info-icon">📄</div>
             <div class="info-content">
-              <div class="info-title">Số hóa đơn</div>
-              <div class="info-val">17961</div>
+              <div class="info-label">Số hóa đơn</div>
+              <div class="info-value">17961</div>
             </div>
           </div>
 
           <!-- Ngày hóa đơn -->
-          <div class="info-row">
+          <div class="info-item">
             <div class="info-icon">📅</div>
             <div class="info-content">
-              <div class="info-title">Ngày hóa đơn</div>
-              <div class="info-val">23/08/2026</div>
+              <div class="info-label">Ngày hóa đơn</div>
+              <div class="info-value">23/08/2026</div>
             </div>
           </div>
 
           <!-- Đơn đặt hàng -->
-          <div class="info-row">
+          <div class="info-item">
             <div class="info-icon">📋</div>
             <div class="info-content">
-              <div class="info-title">Đơn đặt hàng</div>
-              <div class="info-val">505401001063456</div>
+              <div class="info-label">Đơn đặt hàng</div>
+              <div class="info-value">505401001063456</div>
             </div>
           </div>
 
           <!-- Ngày giết mổ -->
-          <div class="info-row">
+          <div class="info-item">
             <div class="info-icon">🐖</div>
             <div class="info-content">
-              <div class="info-title">Ngày giết mổ</div>
-              <div class="info-val">23/08/2026</div>
+              <div class="info-label">Ngày giết mổ</div>
+              <div class="info-value">23/08/2026</div>
             </div>
           </div>
 
           <!-- Khối lượng -->
-          <div class="info-row">
+          <div class="info-item">
             <div class="info-icon">⚖️</div>
             <div class="info-content">
-              <div class="info-title">Khối lượng</div>
-              <div class="info-val val-weight">37,6 kg</div>
+              <div class="info-label">Khối lượng</div>
+              <div class="info-value weight-highlight">37,6 kg</div>
             </div>
           </div>
 
           <!-- Đơn vị nhận hàng -->
-          <div class="info-row">
+          <div class="info-item">
             <div class="info-icon">🏪</div>
             <div class="info-content">
-              <div class="info-title">Đơn vị nhận hàng</div>
-              <div class="info-val">Hộ kinh doanh Phan Văn Tính</div>
+              <div class="info-label">Đơn vị nhận hàng</div>
+              <div class="info-value">Hộ kinh doanh Phan Văn Tính</div>
             </div>
           </div>
         </div>
 
-        <!-- Trace Code Box -->
-        <div class="trace-code-tag">
-          <div class="label">Mã truy xuất điện tử</div>
-          <div class="code">HEO-20260823-17961</div>
+        <!-- Mã truy xuất -->
+        <div class="trace-code-box">
+          <div class="trace-code-label">Mã truy xuất điện tử</div>
+          <div class="trace-code-val">HEO-20260823-17961</div>
+        </div>
+
+        <div class="security-badge">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453 7.159 7.159 0 0 0 1.048.625c.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm2.146 5.146a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 7.793l2.646-2.647z"/>
+          </svg>
+          Dữ liệu đã được niêm phong và xác thực chuỗi cung ứng
         </div>
       </div>
     </div>
 
-    <!-- Right Column: QR Studio Designer -->
-    <div class="qr-studio">
-      <div class="studio-header">
-        <h3>✨ Mã QR Mở Trang Này</h3>
-        <p>Quét để mở trực tiếp trang xác thực nguồn gốc trên điện thoại</p>
-      </div>
-
-      <!-- Preview Canvas -->
-      <div class="qr-preview-container">
-        <div id="qr-canvas-holder"></div>
-        <div class="scan-guide">📱 Quét bằng Zalo hoặc Camera điện thoại</div>
-      </div>
-
-      <!-- Theme Selector -->
-      <div class="control-group">
-        <label class="control-label">Bảng Màu Nghệ Thuật (Gradient Color):</label>
-        <div class="theme-grid">
-          <button class="theme-btn active" onclick="setTheme('emerald')">
-            <div class="theme-swatch" style="background: linear-gradient(135deg, #059669, #064e3b);"></div>
-            Emerald
-          </button>
-          <button class="theme-btn" onclick="setTheme('cp_red')">
-            <div class="theme-swatch" style="background: linear-gradient(135deg, #dc2626, #991b1b);"></div>
-            Đỏ C.P
-          </button>
-          <button class="theme-btn" onclick="setTheme('royal_blue')">
-            <div class="theme-swatch" style="background: linear-gradient(135deg, #2563eb, #1e3a8a);"></div>
-            Navy
-          </button>
-          <button class="theme-btn" onclick="setTheme('sunset')">
-            <div class="theme-swatch" style="background: linear-gradient(135deg, #f59e0b, #d97706);"></div>
-            Gold
-          </button>
-        </div>
-      </div>
-
-      <!-- Dot Style Selector -->
-      <div class="control-group">
-        <label class="control-label">Kiểu Hạt QR (Dot Pattern):</label>
-        <div class="style-grid">
-          <button class="style-btn active" id="dot-dots" onclick="setDotType('dots')">Hạt Tròn</button>
-          <button class="style-btn" id="dot-rounded" onclick="setDotType('rounded')">Bo Góc</button>
-          <button class="style-btn" id="dot-classy" onclick="setDotType('classy-rounded')">Hiện Đại</button>
-        </div>
-      </div>
-
-      <!-- Corner Style Selector -->
-      <div class="control-group">
-        <label class="control-label">Kiểu Mắt QR (Corners):</label>
-        <div class="style-grid">
-          <button class="style-btn active" id="corner-extra" onclick="setCornerType('extra-rounded')">Tròn Đều</button>
-          <button class="style-btn" id="corner-dot" onclick="setCornerType('dot')">Mắt Tròn</button>
-          <button class="style-btn" id="corner-square" onclick="setCornerType('square')">Cổ Điển</button>
-        </div>
-      </div>
-
-      <!-- Actions -->
-      <div class="btn-action-group">
-        <button class="btn-main" onclick="downloadHD_QR()">
-          <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-          </svg>
-          Tải Mã QR Nghệ Thuật (PNG HD)
-        </button>
-
-        <button class="btn-sub" onclick="window.print()">
-          <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/>
-            <path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/>
-          </svg>
-          In Trang Này
-        </button>
-      </div>
+    <div class="footer-note">
+      Hệ thống quản lý nguồn gốc & kiểm dịch thực phẩm an toàn.<br>
+      © 2026 C.P. Việt Nam. All rights reserved.
     </div>
   </div>
 
-  <script>
-    // Link trực tuyến trên GitHub Pages của bạn
-    const LIVE_URL = "https://mrkhang-khoi.github.io/truyxuatnguongoc/";
-    const qrData = (window.location.protocol.startsWith('http')) ? window.location.href : LIVE_URL;
-
-    // SVG icon khiên chứng nhận ở tâm mã QR
-    const shieldSvgIcon = `data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23059669"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>`;
-
-    const colorThemes = {
-      emerald: {
-        color1: '#059669',
-        color2: '#064e3b',
-        cornerSquare: '#047857',
-        cornerDot: '#10b981'
-      },
-      cp_red: {
-        color1: '#dc2626',
-        color2: '#991b1b',
-        cornerSquare: '#b91c1c',
-        cornerDot: '#ef4444'
-      },
-      royal_blue: {
-        color1: '#2563eb',
-        color2: '#1e3a8a',
-        cornerSquare: '#1d4ed8',
-        cornerDot: '#3b82f6'
-      },
-      sunset: {
-        color1: '#d97706',
-        color2: '#78350f',
-        cornerSquare: '#b45309',
-        cornerDot: '#f59e0b'
-      }
-    };
-
-    let currentThemeKey = 'emerald';
-    let currentDotType = 'dots';
-    let currentCornerType = 'extra-rounded';
-    let qrCode;
-
-    function initQR() {
-      const theme = colorThemes[currentThemeKey];
-
-      qrCode = new QRCodeStyling({
-        width: 240,
-        height: 240,
-        type: "canvas",
-        data: qrData,
-        image: shieldSvgIcon,
-        dotsOptions: {
-          color: theme.color1,
-          gradient: {
-            type: "linear",
-            rotation: 45,
-            colorStops: [
-              { offset: 0, color: theme.color1 },
-              { offset: 1, color: theme.color2 }
-            ]
-          },
-          type: currentDotType
-        },
-        backgroundOptions: {
-          color: "#ffffff",
-        },
-        imageOptions: {
-          crossOrigin: "anonymous",
-          margin: 6,
-          imageSize: 0.35
-        },
-        cornersSquareOptions: {
-          color: theme.cornerSquare,
-          type: currentCornerType
-        },
-        cornersDotOptions: {
-          color: theme.cornerDot,
-          type: currentCornerType === 'square' ? 'square' : 'dot'
-        },
-        qrOptions: {
-          errorCorrectionLevel: "H"
-        }
-      });
-
-      const holder = document.getElementById("qr-canvas-holder");
-      holder.innerHTML = "";
-      qrCode.append(holder);
-    }
-
-    function updateQR() {
-      const theme = colorThemes[currentThemeKey];
-      qrCode.update({
-        dotsOptions: {
-          color: theme.color1,
-          gradient: {
-            type: "linear",
-            rotation: 45,
-            colorStops: [
-              { offset: 0, color: theme.color1 },
-              { offset: 1, color: theme.color2 }
-            ]
-          },
-          type: currentDotType
-        },
-        cornersSquareOptions: {
-          color: theme.cornerSquare,
-          type: currentCornerType
-        },
-        cornersDotOptions: {
-          color: theme.cornerDot,
-          type: currentCornerType === 'square' ? 'square' : 'dot'
-        }
-      });
-    }
-
-    function setTheme(key) {
-      currentThemeKey = key;
-      document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-      event.currentTarget.classList.add('active');
-      updateQR();
-    }
-
-    function setDotType(type) {
-      currentDotType = type;
-      document.querySelectorAll('.style-btn[id^="dot-"]').forEach(b => b.classList.remove('active'));
-      document.getElementById('dot-' + (type === 'classy-rounded' ? 'classy' : type)).classList.add('active');
-      updateQR();
-    }
-
-    function setCornerType(type) {
-      currentCornerType = type;
-      document.querySelectorAll('.style-btn[id^="corner-"]').forEach(b => b.classList.remove('active'));
-      document.getElementById('corner-' + (type === 'extra-rounded' ? 'extra' : type)).classList.add('active');
-      updateQR();
-    }
-
-    function downloadHD_QR() {
-      qrCode.download({ name: `Ma_QR_Truy_Xuat_Online_${currentThemeKey}`, extension: "png" });
-    }
-
-    window.addEventListener('load', initQR);
-  </script>
 </body>
 </html>
